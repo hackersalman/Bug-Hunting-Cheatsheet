@@ -153,11 +153,3 @@ File upload functionality can sometimes be insecure, allowing malicious file upl
 - **Leverage Google Dorking with other recon tools** like **Subfinder**, **Amass**, or **Burp Suite** to map out a target comprehensively.
 
 ---
-
-### **Important Notes:**
-- **Ethical considerations**: Ensure you're conducting these activities on targets for which you have permission (via a bug bounty program or authorized engagement). Unauthorized scanning or enumeration can be illegal.
-- **Rate limits**: Google has rate limits for search queries, so be cautious when running multiple queries in a short period of time.
-
----
-
-By leveraging these Google Dorking techniques effectively, you can gather valuable information during your reconnaissance phase and discover security flaws or misconfigurations that can be tested further in your bug hunting efforts. Let me know if you'd like more examples or deeper insights into specific dorks! 😊
