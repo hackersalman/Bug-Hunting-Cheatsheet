@@ -1,10 +1,11 @@
 ## Index
 
-1. [Unprotected functionality](Unprotected-functionality)
-2. [Parameter based access control](Parameter-based-access-control)
-3. [Broken access control resulting from platform misconfiguration Url and Method based](Broken-access-control-resulting-from-platform-misconfiguration-Url-and-Method-based)
-4. [Referer based access control](Referer-based-access-control)
-___
+1. [Unprotected Functionality](#Unprotected-functionality)
+2. [Parameter-Based Access Control](#Parameter-based-access-control)
+3. [Broken Access Control Resulting from Platform Misconfiguration (URL and Method-Based)](#Broken-access-control-resulting-from-platform-misconfiguration-Url-and-Method-based)
+4. [Referer-Based Access Control](#Referer-based-access-control)
+
+---
 
 ### Unprotected functionality
 
