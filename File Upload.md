@@ -150,17 +150,6 @@ Content-Length: 49
 <?php echo file_get_contents('/path/to/file'); ?>
 ```
 
-## **Preventing File Upload Vulnerabilities**
-
-To mitigate file upload vulnerabilities:
-1. **Restrict File Types**: Allow only specific, safe file types (e.g., images, documents) and validate the file type server-side.  
-2. **Rename Uploaded Files**: Generate unique, randomized file names and avoid using the original file name.  
-3. **Store Files Outside the Web Root**: Keep uploaded files outside directories accessible by the web server to prevent direct access.  
-4. **Scan Uploaded Files**: Use antivirus or security tools to scan for malicious content.  
-5. **Limit File Size and Type**: Set restrictions on the maximum file size and check the content against expected MIME types.
-
----
-
 ## **PHP Payloads for RCE**
 
 ### **Normal Payloads**
@@ -226,6 +215,15 @@ Content-Type: application/x-httpd-php
 .php%00.png
 .p.phphp
 ```
+---
+## **Preventing File Upload Vulnerabilities**
+
+To mitigate file upload vulnerabilities:
+1. **Restrict File Types**: Allow only specific, safe file types (e.g., images, documents) and validate the file type server-side.  
+2. **Rename Uploaded Files**: Generate unique, randomized file names and avoid using the original file name.  
+3. **Store Files Outside the Web Root**: Keep uploaded files outside directories accessible by the web server to prevent direct access.  
+4. **Scan Uploaded Files**: Use antivirus or security tools to scan for malicious content.  
+5. **Limit File Size and Type**: Set restrictions on the maximum file size and check the content against expected MIME types.
 
 ---
 
