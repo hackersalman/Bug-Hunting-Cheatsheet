@@ -5,7 +5,7 @@
 1. [PHP Web Shell Upload](#1-php-web-shell-upload)  
 2. [Image Upload with Embedded PHP Code](#2-image-upload-with-embedded-php-code)  
 3. [Bypassing Content-Type Validation](#3-bypassing-content-type-validation)
-4. [Uploading Files via Path Traversal Vulnerability](#uploading-files-via-path-traversal-vulnerability)  
+4. [Uploading Files via Path Traversal Vulnerability](#4-uploading-files-via-path-traversal-vulnerability)  
 5. [Uploading Files Using PUT](#uploading-files-using-put)
 7. [PHP Payloads for RCE](#php-payloads-for-rce)  
    - [Normal Payloads](#normal-payloads)  
@@ -98,7 +98,7 @@ Here, the attacker uploads a JSP file disguised with a `Content-Type` of `image/
 
 ---
 
-## **Uploading Files via Path Traversal Vulnerability**
+### **4. Uploading Files via Path Traversal Vulnerability**
 
 In some cases, you can exploit file upload vulnerability via path traversal:  
 - `filename="../exploit.php"`  
