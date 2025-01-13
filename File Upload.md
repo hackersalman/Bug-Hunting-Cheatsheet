@@ -179,7 +179,6 @@ Reference : [Portswigger](https://portswigger.net/web-security/file-upload#obfus
 ---
 
 ### **8. File Content Exploit Via Polyglot**
-
 <br>
 
 For more details: [Portswigger](https://portswigger.net/web-security/file-upload#flawed-validation-of-the-file-s-contents)
