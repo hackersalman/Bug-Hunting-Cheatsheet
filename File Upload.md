@@ -1,15 +1,12 @@
 # **File Upload Vulnerability**
 
 ## **Index**
-1. [Description](#description)  
-2. [How Does File Upload Vulnerability Occur?](#how-does-file-upload-vulnerability-occur)  
-3. [Where to Put a File Upload Payload?](#where-to-put-a-file-upload-payload)  
-4. [Examples of HTTP Requests with File Upload Payloads](#examples-of-http-requests-with-file-upload-payloads)  
-   - [PHP Web Shell Upload](#1-php-web-shell-upload)  
-   - [Image Upload with Embedded PHP Code](#2-image-upload-with-embedded-php-code)  
-   - [Bypassing Content-Type Validation](#3-bypassing-content-type-validation)
-5. [Uploading Files via Path Traversal Vulnerability](#uploading-files-via-path-traversal-vulnerability)  
-6. [Uploading Files Using PUT](#uploading-files-using-put)
+
+1. [PHP Web Shell Upload](#1-php-web-shell-upload)  
+2. [Image Upload with Embedded PHP Code](#2-image-upload-with-embedded-php-code)  
+3. [Bypassing Content-Type Validation](#3-bypassing-content-type-validation)
+4. [Uploading Files via Path Traversal Vulnerability](#uploading-files-via-path-traversal-vulnerability)  
+5. [Uploading Files Using PUT](#uploading-files-using-put)
 7. [PHP Payloads for RCE](#php-payloads-for-rce)  
    - [Normal Payloads](#normal-payloads)  
    - [Exploiting Server Configuration](#exploiting-server-configuration)  
@@ -17,35 +14,6 @@
      - [IIS Bypass](#iis-bypass)  
    - [Obfuscating File Extensions](#obfuscating-file-extensions)
 ---
-
-# **Description**
-**File Upload Vulnerability** occurs when a web application allows a user to upload files without properly validating or restricting the file type, content, or destination. This can enable an attacker to upload malicious files, such as web shells, scripts, or executable binaries, leading to remote code execution, data breaches, or defacement.
-
----
-
-## **How Does File Upload Vulnerability Occur?**
-
-1. **Lack of File Type Validation**: The web application does not check the file type, allowing any kind of file (e.g., PHP, JSP, EXE) to be uploaded.  
-2. **Insecure File Storage Location**: Uploaded files are stored in directories that are accessible to the web server, allowing execution of the uploaded code.  
-3. **Weak File Name Validation**: The application does not sanitize the file name, allowing special characters or file extensions to be used.  
-4. **Content-Type Header Manipulation**: If the application relies solely on the `Content-Type` header to validate the file type, an attacker can manipulate the header to bypass the validation.  
-5. **Insufficient Server-Side Checks**: Validation is performed on the client side, which can be easily bypassed by an attacker.
-
----
-
-## **Where to Put a File Upload Payload?**
-
-The payload is uploaded as a file through an HTTP request where the application allows file uploads. Typically, you upload the payload in places like:
-- **Profile picture upload forms**
-- **Document upload forms**
-- **Image galleries**
-- **Resume or CV submission fields**
-- **Custom file submission forms**
-
----
-
-## **Examples of HTTP Requests with File Upload Payloads**
-
 ### **1. PHP Web Shell Upload**
 
 Uploading a simple PHP script as a file to get remote code execution.
