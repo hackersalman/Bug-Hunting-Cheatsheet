@@ -1,5 +1,29 @@
 # 2FA Bypass Testing Techniques
 
+## **Index**
+1. [Status Code Changes](#1-status-code-changes)
+2. [Brute-Force OTP](#2-brute-force-otp)
+3. [OTP Reuse](#3-otp-reuse)
+4. [Cross-Account Token Test](#4-cross-account-token-test)
+5. [Direct Dashboard Access](#5-direct-dashboard-access)
+6. [Search for 2FA Codes](#6-search-for-2fa-codes)
+7. [CSRF/Clickjacking on 2FA](#7-csrfclickjacking-on-2fa)
+8. [Session Persistence](#8-session-persistence)
+9. [OAuth 2FA Bypass](#9-oauth-2fa-bypass)
+10. [Disabling 2FA Without Verification](#10-disabling-2fa-without-verification)
+11. [Password Reset Without 2FA](#11-password-reset-without-2fa)
+12. [Test Default OTPs](#12-test-default-otps)
+13. [Request Manipulation](#13-request-manipulation)
+14. [OpenID Misconfiguration](#14-openid-misconfiguration)
+15. [OTP Expiry Check](#15-otp-expiry-check)
+16. [Backup Code Abuse](#16-backup-code-abuse)
+17. [Sensitive Info Exposure](#17-sensitive-info-exposure)
+18. [Permanent Denial of Service (DoS) on Accounts](#18-permanent-denial-of-service-dos-on-accounts)
+19. [Authenticated Actions Without 2FA](#19-authenticated-actions-without-2fa)
+20. [Bulk OTP Testing in JSON](#20-bulk-otp-testing-in-json)
+
+---
+
 ## 1. Status Code Changes
 - Check if altering response or status codes (e.g., 200, 403) during 2FA verification allows bypass.
 
@@ -70,3 +94,4 @@
   {
     "code": ["1000", "1001", "1002", ..., "9999"]
   }
+  ```
