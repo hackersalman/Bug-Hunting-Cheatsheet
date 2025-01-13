@@ -7,17 +7,16 @@
 4. [Examples of HTTP Requests with File Upload Payloads](#examples-of-http-requests-with-file-upload-payloads)  
    - [PHP Web Shell Upload](#1-php-web-shell-upload)  
    - [Image Upload with Embedded PHP Code](#2-image-upload-with-embedded-php-code)  
-   - [Bypassing Content-Type Validation](#3-bypassing-content-type-validation)  
-5. [Preventing File Upload Vulnerabilities](#preventing-file-upload-vulnerabilities)  
-6. [PHP Payloads for RCE](#php-payloads-for-rce)  
+   - [Bypassing Content-Type Validation](#3-bypassing-content-type-validation)
+5. [Uploading Files via Path Traversal Vulnerability](#uploading-files-via-path-traversal-vulnerability)  
+6. [Uploading Files Using PUT](#uploading-files-using-put)
+7. [PHP Payloads for RCE](#php-payloads-for-rce)  
    - [Normal Payloads](#normal-payloads)  
    - [Exploiting Server Configuration](#exploiting-server-configuration)  
      - [Apache Bypass](#apache-bypass)  
      - [IIS Bypass](#iis-bypass)  
-   - [Obfuscating File Extensions](#obfuscating-file-extensions)  
-7. [Uploading Files via Path Traversal Vulnerability](#uploading-files-via-path-traversal-vulnerability)  
-8. [Uploading Files Using PUT](#uploading-files-using-put)  
-
+   - [Obfuscating File Extensions](#obfuscating-file-extensions)
+8. [Preventing File Upload Vulnerabilities](#preventing-file-upload-vulnerabilities)
 ---
 
 # **Description**
