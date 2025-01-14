@@ -3,6 +3,12 @@ In the implicit flow, this POST request is exposed to attackers via their browse
 
 ### Exploiting Absense of State Parameter
 In Oauth mechanism, `state` parameter in authorization request work as a CSRF token. Absense of this parameter can be exploitable to CSRF attack.
+<br>
+**Here is an example of authorization request without state parameter**
+```
+GET /authorization?client_id=12345&redirect_uri=https://client-app.com/callback&response_type=code&scope=openid%20profile HTTP/1.1
+Host: oauth-authorization-server.com
+```
 
 ### OAuth Account Hijacking via `redirect_uri`
 
