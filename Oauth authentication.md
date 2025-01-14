@@ -32,3 +32,9 @@ client_id=12345
 &response_type=code
 &response_mode=web_message
 ```
+
+### Stealing OAuth access tokens via an open redirect
+
+Check this for more details : [Portswigger Lab](https://portswigger.net/web-security/oauth/lab-oauth-stealing-oauth-access-tokens-via-an-open-redirect)
+
+
