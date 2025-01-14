@@ -3,3 +3,17 @@ In the implicit flow, this POST request is exposed to attackers via their browse
 
 ### Exploiting Absense of State Parameter
 In Oauth mechanism, `state` parameter in authorization request work as a CSRF token. Absense of this parameter can be exploitable to CSRF attack.
+
+### OAuth Account Hijacking via `redirect_uri`
+
+Depending on the grant type, the `redirect_uri` parameter is used to send the authorization code to the specified domain in the `redirect_uri`. If an OAuth mechanism allows arbitrary domains to be specified in the `redirect_uri`, an attacker could exploit this flow to hijack the authorization code.
+
+For example:  
+```
+redirect_uri=https://client-app.net
+```
+The code is sent to `client-app.net`.  
+```
+redirect_uri=https://attacker.com
+```
+The code is sent to `attacker.com`.
