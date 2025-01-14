@@ -16,4 +16,19 @@ The code is sent to `client-app.net`.
 ```
 redirect_uri=https://attacker.com
 ```
-The code is sent to `attacker.com`.
+The code is sent to `attacker.com`.<br>
+<br>
+**Note:** If this process not work, try with `ssrf defense bypass` technique and `parameter pollution`.
+<br>Check this for more details >> [Flawed redirect_uri validation](https://portswigger.net/web-security/oauth#leaking-authorization-codes-and-access-tokens)
+
+### Exploiting response_mode and redirect_uri
+
+In some cases, changing `response_mode` can let you to bypass `redirect_uri` validation. You can change the value with `query`, `fragment`, `web_message`. Also if you notice that the `web_message` response mode is already in the request, this often allows a wider range of subdomains in the `redirect_uri`.
+<br>
+```
+https://auth.example.com/authorize?
+client_id=12345
+&redirect_uri=https://client-app.net
+&response_type=code
+&response_mode=web_message
+```
