@@ -59,6 +59,10 @@ Check this for more details : [Portswigger Lab](https://portswigger.net/web-secu
 
 ---
 
+### Stealing OAuth access tokens via a proxy page
+
+[Portswigger Lab](https://portswigger.net/web-security/oauth/lab-oauth-stealing-oauth-access-tokens-via-a-proxy-page)
+
 ### Exploiting response_mode and redirect_uri
 
 In some cases, changing `response_mode` can let you to bypass `redirect_uri` validation. You can change the value with `query`, `fragment`, `web_message`. Also if you notice that the `web_message` response mode is already in the request, this often allows a wider range of subdomains in the `redirect_uri`.
