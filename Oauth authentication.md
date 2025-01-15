@@ -127,5 +127,10 @@ More details: [Portswigger](https://portswigger.net/web-security/oauth#flawed-sc
 
 ### Unverified user registration
 
-Some websites that provide an OAuth service allow users to register an account without verifying all of their details, including their email address in some cases `(In this case email verification don't work)`. An attacker can exploit this by registering an account with the OAuth provider using the same details as a target user, such as a known email address. Client applications may then allow the attacker to sign in as the victim via this fraudulent account with the OAuth provider.
+Some websites that provide an OAuth service allow users to register an account without verifying all of their details, including their email address in some cases `(In this case email verification with OTP don't work)`. An attacker can exploit this by registering an account with the OAuth provider using the same details as a target user, such as a known email address. Client applications may then allow the attacker to sign in as the victim via this fraudulent account with the OAuth provider.
 
+---
+
+### Unprotected dynamic client registration via OpenID Connect
+
+For more details: [Portswigger](https://portswigger.net/web-security/oauth/openid#identifying-openid-connect)
