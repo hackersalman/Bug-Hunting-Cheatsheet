@@ -150,4 +150,4 @@ Some websites that provide an OAuth service allow users to register an account w
 
 ### Unprotected dynamic client registration via OpenID Connect
 
-For more details: [Portswigger](https://portswigger.net/web-security/oauth/openid#identifying-openid-connect)
+For more details: [Portswigger](https://portswigger.net/web-security/oauth/openid#unprotected-dynamic-client-registration)
