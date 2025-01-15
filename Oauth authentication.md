@@ -7,7 +7,7 @@
 4. [Stealing OAuth Access Tokens via an Open Redirect](#stealing-oauth-access-tokens-via-an-open-redirect)
 5. [Stealing OAuth Access Tokens via a Proxy Page](#stealing-oauth-access-tokens-via-a-proxy-page)
 6. [Exploiting `response_mode` and `redirect_uri`](#exploiting-response_mode-and-redirect_uri)
-7. [Exploiting Flawed Scope Validation in Authorization Code Grant Type](#exploiting-flawed-scope-validation-in-authorization-code-grant-type)
+7. [Exploiting flawed scope validation in authorization code grant type in Oauth service provider server](#Exploiting-flawed-scope-validation-in-authorization-code-grant-type-in-Oauth-service-provider-server)
 8. [Unverified User Registration](#unverified-user-registration)
 9. [Unprotected Dynamic Client Registration via OpenID Connect](#unprotected-dynamic-client-registration-via-openid-connect)
 
