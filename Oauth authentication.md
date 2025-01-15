@@ -10,6 +10,7 @@
 7. [Exploiting flawed scope validation in authorization code grant type in Oauth service provider server](#Exploiting-flawed-scope-validation-in-authorization-code-grant-type-in-Oauth-service-provider-server)
 8. [Unverified User Registration](#unverified-user-registration)
 9. [Unprotected Dynamic Client Registration via OpenID Connect](#unprotected-dynamic-client-registration-via-openid-connect)
+10. [Allowing authorization requests by reference](#Allowing-authorization-requests-by-reference)
 
 ---
 
@@ -151,3 +152,11 @@ Some websites that provide an OAuth service allow users to register an account w
 ### Unprotected dynamic client registration via OpenID Connect
 
 For more details: [Portswigger](https://portswigger.net/web-security/oauth/openid#unprotected-dynamic-client-registration)
+
+---
+
+### Allowing authorization requests by reference
+
+For more deatils: [Portswigger](https://portswigger.net/web-security/oauth/openid#allowing-authorization-requests-by-reference)
+
+---
