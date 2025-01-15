@@ -1,13 +1,30 @@
+# OAuth Authentication Vulnerabilities
+
+## **Table of Contents**
+1. [Improper Implementation of the Implicit Grant Type](#improper-implementation-of-the-implicit-grant-type)
+2. [Exploiting Absense of State Parameter](#Exploiting-Absense-of-State-Parameter)
+3. [OAuth Account Hijacking via `redirect_uri`](#oauth-account-hijacking-via-redirect_uri)
+4. [Stealing OAuth Access Tokens via an Open Redirect](#stealing-oauth-access-tokens-via-an-open-redirect)
+5. [Stealing OAuth Access Tokens via a Proxy Page](#stealing-oauth-access-tokens-via-a-proxy-page)
+6. [Exploiting `response_mode` and `redirect_uri`](#exploiting-response_mode-and-redirect_uri)
+7. [Exploiting Flawed Scope Validation in Authorization Code Grant Type](#exploiting-flawed-scope-validation-in-authorization-code-grant-type)
+8. [Unverified User Registration](#unverified-user-registration)
+9. [Unprotected Dynamic Client Registration via OpenID Connect](#unprotected-dynamic-client-registration-via-openid-connect)
+
+---
+
 ### Improper implementation of the implicit grant type
 In the implicit flow, this POST request is exposed to attackers via their browser. As a result, this behavior can lead to a serious vulnerability if the client application doesn't properly check that the access token matches the other data in the request. In this case, an attacker can simply `change the parameters` sent to the server to impersonate any user.
 
 ---
 
 ### Exploiting Absense of State Parameter
-In Oauth mechanism, `state` parameter in authorization request work as a CSRF token. Absense of this parameter can be exploitable to CSRF attack.
+
+In Oauth mechanism, `state` parameter in authorization request work as a CSRF token. Absense of this parameter can be exploitable to CSRF attack.<br>
 <br>
-<br>
+
 **Here is an example of authorization request without `state` parameter**
+<br>
 ```
 GET /authorization?client_id=12345&redirect_uri=https://client-app.com/callback&response_type=code&scope=openid%20profile HTTP/1.1
 Host: oauth-authorization-server.com
