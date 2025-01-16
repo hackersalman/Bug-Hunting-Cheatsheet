@@ -13,6 +13,7 @@
 7. [Obfuscating File Extensions](#7-obfuscating-file-extensions)
 8. [File Content Exploit Via Polyglot](#8-File-Content-Exploit-Via-Polyglot)
 9. [PHP Payloads for RCE](#php-payloads-for-rce)
+10. [SSRF By Uploading Url Instead Of Picture](#SSRF-By-Uploading-url-instead-of-picture)
 ---
 ### **1. PHP Web Shell Upload**
 
@@ -183,7 +184,13 @@ Reference : [Portswigger](https://portswigger.net/web-security/file-upload#obfus
 
 For more details: [Portswigger](https://portswigger.net/web-security/file-upload#flawed-validation-of-the-file-s-contents)
 
-## **PHP Payloads for RCE**
+### **9. SSRF By Uploading Url Instead Of Picture**
+
+In some cases we can exploit SSRF via file upload vulnerability. In this case we need to change `type:file to type:url` and add a image url.<br>
+<br>
+Here is a h1 POC: [Upload profile photo from URL](https://hackerone.com/reports/713)
+
+## **10. PHP Payloads for RCE**
 
 ```php
 <?php echo file_get_contents('/etc/passwd'); ?> // To read files
