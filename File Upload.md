@@ -12,8 +12,8 @@
      - [IIS Bypass](#iis-bypass)  
 7. [Obfuscating File Extensions](#7-obfuscating-file-extensions)
 8. [File Content Exploit Via Polyglot](#8-File-Content-Exploit-Via-Polyglot)
-9. [PHP Payloads for RCE](#php-payloads-for-rce)
-10. [SSRF By Uploading Url Instead Of Picture](#SSRF-By-Uploading-url-instead-of-picture)
+9. [SSRF By Uploading Url Instead Of Picture](#SSRF-By-Uploading-url-instead-of-picture)
+10. [PHP Payloads for RCE](#php-payloads-for-rce)
 ---
 ### **1. PHP Web Shell Upload**
 
