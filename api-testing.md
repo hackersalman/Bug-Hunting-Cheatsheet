@@ -45,7 +45,14 @@
 Mass assignment vulnerabilities occur when an application blindly accepts user input and sets multiple attributes on an object without validation. Attackers can exploit this to manipulate parameters or escalate privileges.
 
 **Example Attack Scenario:**
-A web app allows users to update their profile with fields like `name`, `email`, and `role`. If the server does not validate the incoming data:
+A web app allows users to update their profile with fields like `name`, `email`.
+```json
+{
+    "name": "Alice",
+    "email": "alice@example.com",
+}
+```
+If the server does not validate the incoming data. An attacker could add the `"isAdmin": true` field, thereby escalating privileges if the application does not restrict this.
 ```json
 {
     "name": "Alice",
@@ -53,7 +60,6 @@ A web app allows users to update their profile with fields like `name`, `email`,
     "isAdmin": true
 }
 ```
-An attacker could add the `"isAdmin": true` field, thereby escalating privileges if the application does not restrict this.
 
 ---
 
