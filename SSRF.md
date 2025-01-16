@@ -220,3 +220,4 @@ Content-Length: 118
 
 stockApi=http://weliketoshop.net/product/nextProduct?currentProductId=6&path=http://192.168.0.68/admin
 ```
+**Note: Always encode `&` to url encode** 
