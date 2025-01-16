@@ -190,7 +190,7 @@ In some cases we can exploit SSRF via file upload vulnerability. In this case we
 <br>
 Here is a h1 POC: [Upload profile photo from URL](https://hackerone.com/reports/713)
 
-## **10. PHP Payloads for RCE**
+### **10. PHP Payloads for RCE**
 
 ```php
 <?php echo file_get_contents('/etc/passwd'); ?> // To read files
