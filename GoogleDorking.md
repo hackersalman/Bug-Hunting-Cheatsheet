@@ -154,4 +154,9 @@ File upload functionality can sometimes be insecure, allowing malicious file upl
 
 ---
 
+### Curl
+`
 curl -G "https://web.archive.org/cdx/search/cdx" --data-urlencode "url=*.tesla.com/*" --data-urlencode "collapse=urlkey" --data-urlencode "output=text" --data-urlencode "fl=original" > out.txt
+`
+
+---
