@@ -85,9 +85,9 @@ If the server does not validate the incoming data. An attacker could add the `"i
    name=attacker&name=originalUser
    ```
 - The server's behavior varies by technology:
-   - PHP/Apache: Uses the last parameter.
-   - ASP.NET: Concatenates the parameters.
-   - Node.js/Express/Apache Tomcat: Uses the first parameter.
+   - **PHP/Apache:** Uses the last parameter.
+   - **ASP.NET:** Concatenates the parameters.
+   - **Node.js/Express/Apache Tomcat:** Uses the first parameter.
      
 ### 3.3. Testing in REST Paths
 - Test RESTful APIs by manipulating URL path parameters.
