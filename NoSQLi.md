@@ -6,11 +6,11 @@
 4. [Submitting Query Operators](#submitting-query-operators)
 5. [MongoDB Login Bypass](#mongodb-login-bypass)
 6. [MongoDB Data Retrieving](#mongodb-data-retrieving)
-7. [Operator Injection to Retrieve Unknown Data](#operator-injection-to-retrieve-unknown-data)
+7. [Operator Injection to Retrieving Unknown Data](#operator-injection-to-retrieve-unknown-data)
 8. [Time-Based NoSQL Injection](#time-based-nosql-injection)
 ---
 
-### Basic operator difference between SQLi && NoSQLi
+### Basic operator difference between SQLi & NoSQLi
   1. `or` >> `||`
   2. `and` >> `&&`
   3. `-- -` >> `%00`
