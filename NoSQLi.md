@@ -16,6 +16,10 @@
 ```
 \'
 ```
+Or we can try,
+```
+%00
+```
 **Injecting in JSON Format**
 ```
 '\"`{\r;$Foo}\n$Foo \\xYZ\u0000
