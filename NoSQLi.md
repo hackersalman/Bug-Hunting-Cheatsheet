@@ -1,16 +1,16 @@
 # Table of Contents
 
-1. [Basic Operator Difference Between SQLi & NoSQLi](#basic-operator-difference-between-sqli-nosqli)
+1. [Basic Operator Difference Between SQLi And NoSQLi](#basic-operator-difference-between-sqli-and-nosqli)
 2. [Detecting NoSQLi Vulnerability](#detecting-nosqli-vulnerability)
 3. [NoSQL Operator Injection](#nosql-operator-injection)
 4. [Submitting Query Operators](#submitting-query-operators)
 5. [MongoDB Login Bypass](#mongodb-login-bypass)
 6. [MongoDB Data Retrieving](#mongodb-data-retrieving)
-7. [Operator Injection to Retrieving Unknown Data](#operator-injection-to-retrieve-unknown-data)
+7. [Operator Injection to Retrieving Unknown Data](#operator-injection-to-retrieving-unknown-data)
 8. [Time-Based NoSQL Injection](#time-based-nosql-injection)
 ---
 
-### Basic operator difference between SQLi & NoSQLi
+### Basic operator difference between SQLi and NoSQLi
   1. `or` >> `||`
   2. `and` >> `&&`
   3. `-- -` >> `%00`
