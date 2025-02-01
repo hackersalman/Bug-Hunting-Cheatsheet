@@ -57,7 +57,7 @@ hashcat -a 0 -m 16500 eyJraWQiOiIyZTI4MDIyYy02NWQ3LTRjNTEtYjU3Ni1mYWY3Mjg4MzVhMT
 
 1. In Burp, go to the JWT Editor Keys tab.
 2. Click New Symmetric Key.
-3. Check `Specify secret` and the secret key in the box.
+3. Check `Specify secret` and add the secret key in the box.
 4. Click Generate to generate a new key in JWK format.
 5. Click OK to save the key.
 6. In Burp Repeater `>>` JSON Web Token `>>` Sign `>>` Don't modify header `>>` Send request. 
