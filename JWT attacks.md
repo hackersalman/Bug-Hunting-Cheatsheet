@@ -42,12 +42,26 @@ JWT libraries typically provide two methods: one for verifying tokens and anothe
 ## JWT Authentication Bypass via Weak Signing Key (Bruteforcing)
 Developers sometimes forget to change default secrets or hardcoded example secrets in JWT applications. This makes it easy for attackers to brute-force the server's secret using a wordlist. Then craft a new jwt token with that secret key.
 
+Example command using `jwt_tool/jwt`: `(Recommended)`
+```
+jwt <JWT Token> -C -d /usr/share/wordlists/rockyou.txt
+```
+
 Example command using `hashcat`:
 ```
 hashcat -a 0 -m 16500 eyJraWQiOiIyZTI4MDIyYy02NWQ3LTRjNTEtYjU3Ni1mYWY3Mjg4MzVhMTUiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsImV4cCI6MTcxMTIyMDc5MSwic3ViIjoiYWRtaW5pc3RyYXRvciJ9.gteqm9hkHA6PdSv0pqbXBeUCON_8kwelR7Be1NI6WMs ~/Wordlist/jwt.secrets.list
 ```
 [Wordlist of common secret keys](https://github.com/wallarm/jwt-secrets/blob/master/jwt.secrets.list)
 
+**Generate a forged signing key**
+
+1. Using Burp Decoder, Base64 encode the secret that you brute-forced in the previous section.
+2. In Burp, go to the JWT Editor Keys tab.
+3. Click New Symmetric Key.
+4. Click Generate to generate a new key in JWK format. `(Note that you don't need to select a key size as this will automatically be updated later)`.
+5. Replace the generated `base64 key` value for the `k` property with the Base64-encoded secret.
+6. Click OK to save the key.
+7. In Burp Repeater `>>` JSON Web Token `>>` Sign `>>` Don't modify header `>>` Send request. 
 
 ## JWT Header Parameter Injections
 JWT headers, also known as JOSE headers, often contain several parameters of interest to attackers:
