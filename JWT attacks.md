@@ -27,11 +27,17 @@ JSON Web Tokens (JWTs) are a standard format for sending cryptographically signe
 
 ## Accepting Arbitrary Signatures
 JWT libraries typically provide two methods: one for verifying tokens and another that just decodes them. For example, the Node.js library `jsonwebtoken` has `verify()` and `decode()`. Sometimes, developers mistakenly use `decode()` without verifying the signature, effectively allowing arbitrary values in the JSON data, enabling an attacker to modify user roles and escalate privileges.
+<br>
+<br>
+**Steps:**
+1. Add a character `x` after signature and check the response.
+2. If the response maintain a logged in session wothout logging out, it means the token is vulnerable.
+3. Now edit the payload info with other users data and send the request.
 
 ## Accepting Tokens with No Signature
 1. Set the `alg` parameter value to `none`.
-2. Set or change `username`, `role`, `id` in the payload.
-3. Remove the signature from the JWT, but leave the trailing dot after the payload.
+2. Set or change `username`, `role`, `id` in the payload `(Replace payload with another user data)`.
+3. Remove the signature from the JWT, but leave the trailing dot after the payload and send the request.
 
 ## JWT Authentication Bypass via Weak Signing Key (Bruteforcing)
 Developers sometimes forget to change default secrets or hardcoded example secrets in JWT applications. This makes it easy for attackers to brute-force the server's secret using a wordlist. Then craft a new jwt token with that secret key.
