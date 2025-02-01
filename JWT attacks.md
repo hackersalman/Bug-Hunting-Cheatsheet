@@ -55,13 +55,12 @@ hashcat -a 0 -m 16500 eyJraWQiOiIyZTI4MDIyYy02NWQ3LTRjNTEtYjU3Ni1mYWY3Mjg4MzVhMT
 
 **Generate a forged signing key**
 
-1. Using Burp Decoder, Base64 encode the secret that you brute-forced in the previous section.
-2. In Burp, go to the JWT Editor Keys tab.
-3. Click New Symmetric Key.
-4. Click Generate to generate a new key in JWK format. `(Note that you don't need to select a key size as this will automatically be updated later)`.
-5. Replace the generated `base64 key` value for the `k` property with the Base64-encoded secret.
-6. Click OK to save the key.
-7. In Burp Repeater `>>` JSON Web Token `>>` Sign `>>` Don't modify header `>>` Send request. 
+1. In Burp, go to the JWT Editor Keys tab.
+2. Click New Symmetric Key.
+3. Check `Specify secret` and the secret key in the box.
+4. Click Generate to generate a new key in JWK format.
+5. Click OK to save the key.
+6. In Burp Repeater `>>` JSON Web Token `>>` Sign `>>` Don't modify header `>>` Send request. 
 
 ## JWT Header Parameter Injections
 JWT headers, also known as JOSE headers, often contain several parameters of interest to attackers:
