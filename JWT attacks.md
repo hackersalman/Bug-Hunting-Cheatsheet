@@ -60,7 +60,7 @@ hashcat -a 0 -m 16500 eyJraWQiOiIyZTI4MDIyYy02NWQ3LTRjNTEtYjU3Ni1mYWY3Mjg4MzVhMT
 3. Check `Specify secret` and add the secret key in the box.
 4. Click Generate to generate a new key in JWK format.
 5. Click OK to save the key.
-6. In Burp Repeater `>>` JSON Web Token `>>` Sign `>>` Don't modify header `>>` Send request. 
+6. In Burp `Repeater` >> `JSON Web Token` >> `Sign` >> `Don't modify header` >> `Send` request. 
 
 ## JWT Header Parameter Injections
 JWT headers, also known as JOSE headers, often contain several parameters of interest to attackers:
@@ -76,10 +76,9 @@ Servers should ideally use a limited whitelist of public keys to verify JWT sign
 1. Send the request to Repeater.
 2. Go to the JSON Web Token tab to change the payload info.
 3. Generate a new RSA key in the JWT Editor.
-4. In the JSON Web Token tab, select Attack -> Embedded JWK and add the generated `kid`.
+4. In the `JSON Web Token` tab, select `Attack` -> `Embedded JWK` and add the generated `kid`.
 5. Sign the key.
 6. Send the HTTP request.
-7. Repeat 4,5 if it doesn't work at first time.
 
 ### Injecting Self-Signed JWTs via the `jku` Parameter
 Instead of embedding public keys using the `jwk` parameter, some servers accept the `jku` parameter, allowing attackers to reference a JWK Set URL. If the server fetches the key from this URL, you can bypass authentication using the `jku` header.
@@ -101,14 +100,13 @@ Instead of embedding public keys using the `jwk` parameter, some servers accept 
        ]
    }
    ```
-5. Change `kid` and `n` to match your RSA key's `kid`, `n`.
+5. Change `kid` and `n` in exploit server to match your RSA key's `kid`, `n`.
 6. Add the `jku` parameter, pointing to your exploit server in header of Json Web Tokens in Burp.
    ```
    "jku": "https://exploit.server/.well-known/jwks.json"
    ```
 7. Sign the JWT with `Update/generate "alg", "typ" and "kid" parameters`.
 8. Send the request.
-9. If not works, try step `7` with `Don't modify header`.
 
 ### Injecting Self-Signed JWTs via the `kid` Parameter
 If the server allows directory traversal in the `kid` parameter, an attacker can force the server to use an arbitrary file, like `/dev/null`, as the verification key. If the server supports symmetric algorithms, the JWT can be signed using an empty string.
