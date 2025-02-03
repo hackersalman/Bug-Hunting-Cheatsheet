@@ -145,7 +145,7 @@ Algorithm confusion vulnerabilities occur when JWT libraries rely on the `alg` p
 5. Copy and encode the PEM key to Base64 and create a new symmetric key in the JWT Editor.
 6. Replace the `"k"` parameter with the Base64-encoded PEM key.
 7. Set the `alg` header to `HS256`.
-8. Modify the payload and sign the key with symmetric key you created.
+8. Modify the payload `(Don't modify header)` and sign the key with symmetric key you created.
 9. Send the request.
 
 ### Deriving Public Keys from Existing Tokens (Without Exposed Keys)
