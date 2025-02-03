@@ -19,6 +19,10 @@
 
 ---
 
+**Related Topic:** [Server-Side-Parameter-Pollution](https://github.com/tasin-zucced/Bug-Hunting-Cheatsheet/blob/main/Server%20Side%20Parameter%20Pollution.md)
+
+---
+
 # API Reconnaissance
 
 ### 1.1. Discovering API Documentation
