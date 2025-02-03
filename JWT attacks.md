@@ -121,7 +121,7 @@ If the server allows directory traversal in the `kid` parameter, an attacker can
 1. In the JWT header, set `kid` to `../../../../../../../dev/null`.
 2. Change the payload `sub` claim to the desired user.
 3. Generate new symmetric key in JWT editor.
-4. Replace `"K": "AA=="` and save the key. ```Use a null byte (AA==) for the symmetric key.```
+4. Remove the value of `"K":""` and save the key.
 5. Sign the JWT with generated new symmetric key with ```Don't modify Header```.
 6. Send the request.
 
