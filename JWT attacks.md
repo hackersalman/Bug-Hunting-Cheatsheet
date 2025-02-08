@@ -100,7 +100,7 @@ Instead of embedding public keys using the `jwk` parameter, some servers accept 
        ]
    }
    ```
-5. Change `kid` and `n` in exploit server to match your RSA key's `kid`, `n`.
+5. Change `kid` and `n` in paylod to match your RSA key's `kid`, `n` of exploit server.
 6. Add the `jku` parameter, pointing to your exploit server in header of Json Web Tokens in Burp.
    ```
    "jku": "https://exploit.server/.well-known/jwks.json"
