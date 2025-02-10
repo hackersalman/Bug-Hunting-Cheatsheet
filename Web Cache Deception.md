@@ -16,6 +16,10 @@
 
 ---
 
+**Note: Always Use Url Encoded Delimeter**
+
+---
+
 ## **1. Detecting Cached Responses**
 
 To confirm caching behavior, inspect response headers and time differences:
