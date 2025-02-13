@@ -108,7 +108,11 @@ If this doesn't work, you can try the following:
 
 ![MongoDB Login Bypass Screenshot](https://github.com/user-attachments/assets/18902009-c2d8-4162-b5d8-7ebb221fd49e)
 
-Note: We need to input at least one valid credential to make a valid query.
+In some cases we might need to use `\`.
+
+![Screenshot From 2025-02-13 13-24-35](https://github.com/user-attachments/assets/05947457-4d43-48a4-84ba-a4b069e7bc04)
+
+**Note: We need to input at least one valid credential to make a valid query.**
 
 If this doesn't work, you can try the following:
 
