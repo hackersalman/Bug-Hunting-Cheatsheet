@@ -39,6 +39,10 @@ JWT libraries typically provide two methods: one for verifying tokens and anothe
 2. Set or change `username`, `role`, `id` in the payload `(Replace payload with another user data)`.
 3. Remove the signature from the JWT, but leave the trailing dot after the payload and send the request.
 
+Or,
+
+1. `Json Web Token` >> `Attack` >> `"none' Signing Algorithm` >> `Ok`
+
 ## JWT Authentication Bypass via Weak Signing Key (Bruteforcing)
 Developers sometimes forget to change default secrets or hardcoded example secrets in JWT applications. This makes it easy for attackers to brute-force the server's secret using a wordlist. Then craft a new jwt token with that secret key.
 
