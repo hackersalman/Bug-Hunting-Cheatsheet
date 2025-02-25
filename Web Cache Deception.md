@@ -55,7 +55,7 @@ Caching mechanisms often rely on file extensions such as `.css`, `.js`, or `.jpg
 
 #### **Path Delimiter Discrepancies**
 
-1. Add a delimiter (`;`) after the original path.  
+1. Add a delimiter (`;`) after the original path. **Note: Must remove `/`.**  
 2. If the response is the same, append `/wcd` with a file extension like `.js` or `.css`.  
 3. Use the crafted URL for exploitation.
 
