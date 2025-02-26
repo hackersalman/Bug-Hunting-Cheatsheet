@@ -16,7 +16,7 @@
 
 ---
 
-**Note: Always Use Url Encoded Delimeter**
+**Note: Always Use Url Encoded Delimeter. Also avoid using `/` with delimiter. Use different type of combinations in different scenario**
 
 ---
 
@@ -55,7 +55,7 @@ Caching mechanisms often rely on file extensions such as `.css`, `.js`, or `.jpg
 
 #### **Path Delimiter Discrepancies**
 
-1. Add a delimiter (`;`) after the original path. **Note: Must remove `/`.**  
+1. Add a delimiter (`;`) after the original path. **Note: Must remove `/` after orignal path.**  
 2. If the response is the same, append `/wcd` with a file extension like `.js` or `.css`.  
 3. Use the crafted URL for exploitation.
 
@@ -63,13 +63,13 @@ Caching mechanisms often rely on file extensions such as `.css`, `.js`, or `.jpg
 
 #### **Path Delimiter Decoding Discrepancies**
 
-1. Similar to delimiter discrepancies but use encoded delimiters like `%3b` (URL-encoded `;`).  
+1. Similar to delimiter discrepancies but use encoded delimiters like `%3b` (URL-encoded `;`). **Note: Must remove `/` after orignal path.**
 2. Test the response and confirm caching behavior.  
 3. Craft and exploit the malicious URL.
 
 ---
 
-### **Web Cache Deception Delimiter Lists**
+### **Web Cache Deception Delimiter Lists.**
 
 The following list includes common delimiters that can help identify vulnerabilities:
 
@@ -152,8 +152,8 @@ Many web servers store static resources in predefined directories (e.g., `/stati
 
 #### **Normalization Discrepancies by the Origin Server**
 
-1. Add `/<static-directory-prefix>/..%2f<dynamic-path>` to the URL.  
-   - **Example**: `/assets/..%2fprofile`.  
+1. Add `/<static-directory-prefix>/..%2f<dynamic-path>?wcd` to the URL.  
+   - **Example**: `/assets/..%2fprofile?wcd`.  
 
 The origin server resolves the path traversal, serving dynamic content, while the cache stores it as static.
 
@@ -161,8 +161,8 @@ The origin server resolves the path traversal, serving dynamic content, while th
 
 #### **Normalization Discrepancies by the Cache Server**
 
-1. Use the reverse pattern: `/<dynamic-path>%2f%2e%2e%2f<static-directory-prefix>`.  
-   - **Example**: `/profile%2f%2e%2e%2fassets`.  
+1. Use the reverse pattern: `/<dynamic-path>%3f%2f%2e%2e%2f<static-directory-prefix>?wcd`.  
+   - **Example**: `/profile%3f%2f%2e%2e%2fassets?wcd`.  
 
 The cache interprets it differently, potentially exposing sensitive data.
 
