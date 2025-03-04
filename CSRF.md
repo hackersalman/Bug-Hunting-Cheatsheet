@@ -5,7 +5,7 @@
 ## Index
 
 1. [Testing CSRF Token](#testing-csrf-token)
-2. [Testing CSRF Token and CSRF Key Cookies](#testing-csrf-token-and-csrf-cookies)
+2. [Testing CSRF Token and CSRF Key Cookies](#testing-csrf-token-and-csrf-key-cookies)
 3. [Exploitation Techniques](#exploitation-techniques)
    - [HTML Exploit Example](#html-exploit-example)
    - [Image-based CSRF Cookie Injection](#image-based-csrf-cookie-injection)
