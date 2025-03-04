@@ -39,9 +39,7 @@ When testing a CSRF token, follow these steps:
 
 **Case 2: If CSRF cookie Tied With User Session Cookie (Exclusive)**
 
-**Summary :** Suppose there is a web application where the CSRF token or CSRF token + CSRF key is tied to the user's session cookie. If we replace the CSRF token or CSRF token + CSRF key with that of another user and the request still returns a `200 OK` response, it indicates that the application is vulnerable to a CSRF attack. A potential exploitation method is explained in the following PortSwigger Lab:
-
-[Portswigger Lab](https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-tied-to-non-session-cookie)
+**Summary :** Suppose there is a web application where the CSRF token or CSRF token + CSRF key is tied to the user's session cookie. If we replace the CSRF token or CSRF token + CSRF key with that of another user and the request still returns a `200 OK` response, it indicates that the application is vulnerable to a CSRF attack. A potential exploitation method is explained in the following [Portswigger Lab](https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-tied-to-non-session-cookie).
 
 <br>
 
