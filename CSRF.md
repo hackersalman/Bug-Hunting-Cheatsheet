@@ -5,7 +5,7 @@
 ## Index
 
 1. [Testing CSRF Token](#testing-csrf-token)
-2. [Testing CSRF Token and CSRF Cookies](#testing-csrf-token-and-csrf-cookies)
+2. [Testing CSRF Token and CSRF Key Cookies](#testing-csrf-token-and-csrf-cookies)
 3. [Exploitation Techniques](#exploitation-techniques)
    - [HTML Exploit Example](#html-exploit-example)
    - [Image-based CSRF Cookie Injection](#image-based-csrf-cookie-injection)
@@ -28,13 +28,13 @@ When testing a CSRF token, follow these steps:
 
 ---
 
-## Testing CSRF Token and CSRF Cookies
+## Testing CSRF Token and CSRF Key Cookies
 
 **If CSRF cookie Not Tied With User Session Cookie**
 
 1. **Submit an invalid CSRF token**: See if the application accepts it.
 2. **Submit a valid CSRF token from another user**: Check if the token is user-specific. 
-3. **Submit a valid CSRF token and CSRF cookie from another user**: Test if both token and cookie are required to match.
+3. **Submit a valid CSRF token and CSRF Key cookie from another user**: Test if both token and cookie are required to match.
 4. **Assign a random value to token + cookie**: In a duplicated token cookie, try setting the same random value to both.
 
 **If CSRF cookie Tied With User Session Cookie**
