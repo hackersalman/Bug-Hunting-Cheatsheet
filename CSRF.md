@@ -15,7 +15,7 @@
 6. [Bypassing SameSite Policy](#bypassing-samesite-policy)
    - [Lax Bypass Via Method Override](#Lax-Bypass-Via-Method-Override)
    - [Strict Bypass Via Client Side Redirect](#Strict-Bypass-Via-Client-Side-Redirect)
-
+7. [Notes](#Notes)
 ---
 
 ## Testing CSRF Token
@@ -175,7 +175,7 @@ If there is a endpoint in website that redirecting to another page of website, y
 ```
 ---
 
-### **Table**
+### Notes
 
 | Attribute         | Sent with Cross-Origin Requests? | Sent on Same-Site Requests? | Notes                                       |
 |-------------------|----------------------------------|-----------------------------|---------------------------------------------|
@@ -188,4 +188,23 @@ If there is a endpoint in website that redirecting to another page of website, y
 ```plaintext
 Set-Cookie: session=bciZoELY2ukJUUOj1zJ7wcAGdYXtvq3C; Secure; HttpOnly; SameSite=Strict
 ```
+
+Here, `Secure` and `HttpOnly` attributes in the `Set-Cookie` header enhance the security of cookies:
+
+1. **`Secure` Attribute**  
+   - Ensures the cookie is only sent over **HTTPS** connections.
+   - Prevents the cookie from being transmitted over **unencrypted (HTTP)** connections, reducing the risk of **man-in-the-middle (MITM) attacks** or **cookie stealing via xss attack**.
+   - If Secure is set, even if the user accidentally accesses the site over HTTP, the browser won’t send the cookie to attacker via xss attack. On the other hand, An attacker on the same network `(e.g., public Wi-Fi)` won't be able to sniffs the HTTP traffic and steals the session cookie.
+
+2. **`HttpOnly` Attribute**  
+   - Restricts client-side JavaScript from accessing the cookie.
+   - Prevents attacks like **Cross-Site Scripting (XSS)** from stealing the cookie using `document.cookie`.
+
+**Example:**
+If a website is vulnerable to XSS and an attacker injects:
+```js
+console.log(document.cookie);
+```
+- Without `HttpOnly`: The attacker can steal the `session` cookie.
+- With `HttpOnly`: JavaScript **cannot** access the cookie, protecting user sessions.
 ---
