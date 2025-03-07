@@ -12,6 +12,7 @@
    - [XSS Based CSRF Attack](#XSS-Based-CSRF-Attack)
 5. [Testing the Referer Header for CSRF Attack](#testing-the-referer-header-for-csrf-attack)
    - [Referer validation depends on header being present](#Referer-validation-depends-on-header-being-present)
+   - [Broken referer validation](#Broken-referer-validation)
 6. [Bypassing SameSite Policy](#bypassing-samesite-policy)
    - [Lax Bypass Via Method Override](#Lax-Bypass-Via-Method-Override)
    - [Strict Bypass Via Client Side Redirect](#Strict-Bypass-Via-Client-Side-Redirect)
@@ -134,6 +135,10 @@ To exploit a CSRF token + cookie mechanism, two actions are required:
   </body>
 </html>
 ```
+
+### Broken referer validation
+
+[Portswigger](https://portswigger.net/web-security/csrf/bypassing-referer-based-defenses#validation-of-referer-can-be-circumvented)
 
 ---
 
