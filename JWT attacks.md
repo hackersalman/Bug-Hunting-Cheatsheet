@@ -161,3 +161,7 @@ Algorithm confusion vulnerabilities occur when JWT libraries rely on the `alg` p
 6. Modify the payload and send the request.
 
 ---
+
+### Notes
+
+[Secret Key Exchange (Diffie-Hellman) - Computerphile](https://youtu.be/NmM9HA2MQGI?si=-Jw4ihmphQHwHIY0)
