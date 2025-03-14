@@ -21,7 +21,7 @@
 ---
 
 ### Improper implementation of the implicit grant type
-In the implicit flow, this POST request is exposed to attackers via their browser. As a result, this behavior can lead to a serious vulnerability if the client application doesn't properly check that the access token matches the other data in the request. In this case, an attacker can simply `change the parameters` sent to the server to impersonate any user.
+In the implicit flow, this POST request is exposed to attackers via their browser. As a result, this behavior can lead to a serious vulnerability if the client application doesn't properly check that the access token matches the other data in the request. In this case, an attacker can simply `change the parameters` sent to the server to impersonate any user. **For example:** When a token is sent to attacker browser, an attacker might change the `username`,`email` or other details targeting another user.
 
 ---
 
