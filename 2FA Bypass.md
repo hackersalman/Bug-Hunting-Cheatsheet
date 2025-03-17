@@ -21,7 +21,7 @@
 18. [Permanent Denial of Service (DoS) on Accounts](#18-permanent-denial-of-service-dos-on-accounts)
 19. [Authenticated Actions Without 2FA](#19-authenticated-actions-without-2fa)
 20. [Bulk OTP Testing in JSON](#20-bulk-otp-testing-in-json)
-21. [HTTP Header Injecton](#HTTP-Header-Injecton)
+21. [HTTP Header Injecton](#21-HTTP-Header-Injecton)
 
 ---
 
