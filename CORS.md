@@ -1,3 +1,7 @@
+**CORS Scenario**
+
+![Screenshot From 2025-03-17 23-57-08](https://github.com/user-attachments/assets/96c5cf0f-9fc0-45a8-b364-776097cceb5c)
+
 ### Testing for CORS vulnerability
 1. Change Origin Header to arbitrary domain.
 ```
