@@ -2,6 +2,8 @@
 
 ![Screenshot From 2025-03-17 23-57-08](https://github.com/user-attachments/assets/96c5cf0f-9fc0-45a8-b364-776097cceb5c)
 
+These headers state that access is allowed from the requesting domain `(malicious-website.com)` and that the cross-origin requests can include cookies `(Access-Control-Allow-Credentials: true)` and so will be processed in-session.
+
 ### Testing for CORS vulnerability
 1. Change Origin Header to arbitrary domain.
 ```
@@ -78,4 +80,4 @@ Origin: https://malicious.vulnerable-website.com
 ```
 Note: If a website trusts an origin that is vulnerable to cross-site scripting (XSS), then an attacker could exploit the XSS to inject some JavaScript that uses CORS to retrieve sensitive information from the site that trusts the vulnerable application. So, if you find a CORS vulnerability, try to bind it with XSS attack.
 
-```
+---
