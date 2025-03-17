@@ -37,7 +37,7 @@ cat out.txt | grep -E '\.(pdf|xml|doc|docx|xls|xlsx|ppt|pptx|csv|sql|json|log|en
 
 ### Tips:
 1. **Highlight Matching Files**: Add `--color` to the `grep` command for better visibility:
-   ```bash
+   ```txt
    cat out.txt | grep --color=always -E '\.(pdf|xml|...)$'
    ```
 
