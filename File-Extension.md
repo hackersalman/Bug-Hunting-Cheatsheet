@@ -1,6 +1,6 @@
 ### Command with an extended list of file extensions:
 
-```bash
+```txt
 cat out.txt | grep -E '\.(pdf|xml|doc|docx|xls|xlsx|ppt|pptx|csv|sql|json|log|env|yml|yaml|conf|config|ini|bak|backup|key|pem|crt|p12|pfx|asc|htpasswd|ssh|kdbx|zip|7z|rar|tar|gz)$'
 ```
 
@@ -42,6 +42,6 @@ cat out.txt | grep -E '\.(pdf|xml|doc|docx|xls|xlsx|ppt|pptx|csv|sql|json|log|en
    ```
 
 2. **Check Entire URLs**: If URLs may have parameters like `?file=secret.pdf`, include those using the following regex:
-   ```bash
+   ```txt
    grep -E '\.(pdf|xml|...)(\?|$)'
    ```
