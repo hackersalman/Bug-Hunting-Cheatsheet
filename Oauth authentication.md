@@ -6,7 +6,7 @@
 3. [OAuth Account Hijacking With SSRF and Parameter via `redirect_uri`](#oauth-account-hijacking-with-ssrf-and-parameter-pollution-via-redirect_uri)
 4. [Stealing OAuth Access Tokens via an Open Redirect](#stealing-oauth-access-tokens-via-an-open-redirect)
 5. [Stealing OAuth Access Tokens via a Proxy Page](#stealing-oauth-access-tokens-via-a-proxy-page)
-6. [Exploiting `response_mode` and `redirect_uri`](#exploiting-response_mode-and-redirect_uri)
+6. [Exploiting `response_mode`](#exploiting-response_mode)
 7. [Exploiting flawed scope validation in authorization code grant type in Oauth service provider server](#Exploiting-flawed-scope-validation-in-authorization-code-grant-type-in-Oauth-service-provider-server)
 8. [Unverified User Registration](#unverified-user-registration)
 9. [Unprotected Dynamic Client Registration via OpenID Connect](#unprotected-dynamic-client-registration-via-openid-connect)
@@ -93,7 +93,7 @@ More deatils: [Portswigger Lab](https://portswigger.net/web-security/oauth/lab-o
 
 ---
 
-### Exploiting response_mode and redirect_uri
+### Exploiting response_mode
 
 In some cases, changing `response_mode` can let you to bypass `redirect_uri` validation. You can change the value with `query`, `fragment`, `web_message`. Also if you notice that the `web_message` response mode is already in the request, this often allows a wider range of subdomains in the `redirect_uri`.
 <br>
