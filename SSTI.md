@@ -49,6 +49,9 @@ Host: vulnerable-website.com
 ```python
 return render_template('greeting.html', name=request.args.get('name'))
 ```
+**In code context**:
+
+![Screenshot From 2025-03-21 10-20-10](https://github.com/user-attachments/assets/8f83b265-7297-4f52-aa10-3ec37bafcd78)
 
 ### Exploiting SSTI to Execute Arbitrary Code
 **Malicious Payload for Jinja2 (`{{config.__class__.__init__.__globals__['os'].popen('id').read()}}`)**:
