@@ -112,6 +112,10 @@ In some cases we might need to use `\`.
 
 ![Screenshot From 2025-02-13 13-24-35](https://github.com/user-attachments/assets/05947457-4d43-48a4-84ba-a4b069e7bc04)
 
+```
+"{\"$ne\":null}"
+```
+
 **Note: We need to input at least one valid credential to make a valid query.**
 
 If this doesn't work, you can try the following:
