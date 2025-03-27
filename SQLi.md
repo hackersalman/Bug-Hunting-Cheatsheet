@@ -378,7 +378,7 @@ and 1=2 union select "1 union select 1,2,3,4-- -",2,3-- - >> Query inside query
 
 **Portswigger Academy Lab:** [Click](https://portswigger.net/web-security/sql-injection/lab-sql-injection-with-filter-bypass-via-xml-encoding)
 
-### Filter Bypass Using Appending 
+## Filter Bypass Using Appending 
 
 In a CTF challenge, we found an input filtering mechanism with the following filters:  
 
@@ -388,7 +388,7 @@ To bypass this filter, we tried the following payload:
 
 ![Screenshot From 2025-03-28 04-53-04](https://github.com/user-attachments/assets/a29a68ab-4436-4552-abbf-5e91fde6c90a)  
 
-### CTF
+## CTF
 ```
 'or 1=1-- -
 admin'-- -
