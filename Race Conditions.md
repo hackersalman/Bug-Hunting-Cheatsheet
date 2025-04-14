@@ -1,0 +1,25 @@
+## Exploiting Limit Overrun Race Conditions
+
+Suppose there is an e-commerce site that provides a discount coupon intended for one-time use. However, you can redeem this coupon multiple times or even indefinitely by exploiting race conditions.
+
+**Exploit**
+
+1. In Burp Repeater, copy the application's endpoint multiple times to trigger coupon redemption.
+2. Create a tab group and send the group in parallel.
+
+## Bypassing Rate Limits with Race Conditions
+
+Suppose an application requires an OTP for actions, allowing only five invalid OTP attempts before locking the user for a limited time. This rate limit can be bypassed using race conditions.
+
+**Exploit**
+
+1. In Burp Intruder, create a custom resource pool with 10 or more concurrent requests.
+2. Start the attack to potentially bypass the five-attempt rate limit by sending 10+ requests in a single packet.
+
+## Multi-Endpoint Race Conditions
+
+[PortSwigger Lab](https://portswigger.net/web-security/race-conditions/lab-race-conditions-multi-endpoint)
+
+## Single-Endpoint Race Conditions
+
+Suppose you request the `forgot password` endpoint to generate a reset password token for `attacker@mail.com`. Simultaneously, make another request for `victim@mail.com` and send both requests in a group tab using a parallel connection. If the endpoint is vulnerable to race conditions, it may send the victim's token to the attacker's email.
