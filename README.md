@@ -1,1 +1,0 @@
-**This cheatsheet serves as a comprehensive guide for bug bounty hunters, penetration testers, and security researchers. It contains a curated list of payloads and methodologies that are crucial in identifying and exploiting vulnerabilities in web applications.**
