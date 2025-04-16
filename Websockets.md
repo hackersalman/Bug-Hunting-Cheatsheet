@@ -1,3 +1,13 @@
+### WebSockets security vulnerabilities
+
+In principle, practically any web security vulnerability might arise in relation to WebSockets:
+
+1. User-supplied input transmitted to the server might be processed in unsafe ways, leading to vulnerabilities such as SQL injection or XML external entity injection.
+2. Some blind vulnerabilities reached via WebSockets might only be detectable using out-of-band (OAST) techniques.
+3. If attacker-controlled data is transmitted via WebSockets to other application users, then it might lead to XSS or other client-side vulnerabilities.
+
+**Note:** In some cases you can bypass ip based restrictions while testing via `X-Forwarded-For` header if there any malicious activity detected by server.
+
 ### Testing Websockets Vulnerability
     For XSS: <img src=1 onerror='alert(1)'>
     To bypass XSS filter: <img src=1 oNeRrOr=alert`1`>
