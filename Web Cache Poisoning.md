@@ -1,8 +1,9 @@
 ## Table of Contents
 
 1. [Detecting Cached Responses](#detecting-cached-responses)
-2. [Explanation of Keyed and Unkeyed](#Explanation-of-Keyed-and-Unkeyed)
-3. [Exploiting Cache Design Flaws](#exploiting-cache-design-flaws)
+2. [Cache Buster](#cache-buster)
+3. [Explanation of Keyed and Unkeyed](#Explanation-of-Keyed-and-Unkeyed)
+4. [Exploiting Cache Design Flaws](#exploiting-cache-design-flaws)
    - [XSS via Unkeyed Headers](#using-web-cache-poisoning-to-deliver-an-xss-attack)
    - [Unkeyed Header Poisoning](#web-cache-poisoning-with-an-unkeyed-header)
    - [Unkeyed Cookie Poisoning](#web-cache-poisoning-with-an-unkeyed-cookie)
@@ -10,7 +11,7 @@
    - [Targeted Poisoning with Unknown Headers](#targeted-web-cache-poisoning-using-an-unknown-header)
    - [Exploiting DOM-Based Vulnerabilities](#using-web-cache-poisoning-to-exploit-dom-based-vulnerabilities)
    - [Chaining Vulnerabilities](#chaining-web-cache-poisoning-vulnerabilities)
-4. [Exploiting Cache Key Implementation Flaws](#exploiting-cache-key-implementation-flaws)
+5. [Exploiting Cache Key Implementation Flaws](#exploiting-cache-key-implementation-flaws)
    - [Unkeyed Port](#exploiting-unkeyed-port)
    - [Unkeyed Query String](#exploiting-an-unkeyed-query-string)
    - [Unkeyed Query Parameter](#exploiting-an-unkeyed-query-parameter)
@@ -19,7 +20,7 @@
    - [Dynamic Content in Resource Imports](#exploiting-dynamic-content-in-resource-imports)
    - [Normalized Cache Keys](#normalized-cache-keys)
    - [Cache Key Injection](#cache-key-injection)
-5. [Poisoning Internal Caches](#poisoning-internal-caches)
+6. [Poisoning Internal Caches](#poisoning-internal-caches)
 
 ---
 
@@ -55,6 +56,25 @@ To confirm caching behavior, inspect response headers and time differences:
 
 Additionally, check `Cache-Control` headers for caching directives like `public` with a non-zero `max-age`.
 
+## Cache Buster
+
+A **cache buster** is a technique used to prevent a web cache from serving a cached response, ensuring a fresh response is fetched from the origin server. It involves adding a unique parameter or value to a request that forces the cache to treat it as a new request, bypassing any cached content.
+
+### Common Cache Buster Methods
+1. **Query Parameter**:
+   - Append a unique query parameter to the URL, such as `?cb=1`, and increment or change the value for each request (e.g., `?cb=2`, `?cb=12345`).
+   - Example: `GET /page?cb=1 HTTP/1.1`
+   - The cache treats each unique parameter value as a distinct request, avoiding cached responses.
+
+2. **Alternative Headers**:
+   - If query parameters don’t work, add cache-busting values to HTTP headers that don’t interfere with the application’s behavior.
+   - Examples:
+     ```
+     Accept-Encoding: gzip, deflate, cachebuster
+     Accept: */*, text/cachebuster
+     Cookie: cachebuster=1
+     Origin: https://cachebuster.vulnerable-website.com
+     ```
 ---
 
 # Explanation of Keyed and Unkeyed
