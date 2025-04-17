@@ -1,25 +1,264 @@
 # Table of Contents
-1. [API Reconnaissance](#api-reconnaissance)
-   - 1.1. [Discovering API Documentation](#discovering-api-documentation)
-   - 1.2. [Fuzzing](#fuzzing)
-   - 1.3. [Burp Scanner](#burp-scanner)
-   - 1.4. [Changing HTTP Methods](#changing-http-methods)
-2. [Mass Assignment](#mass-assignment)
-3. [Testing for Server-Side Parameter Pollution (SSPP)](#testing-for-server-side-parameter-pollution-sspp)
-   - 3.1. [Testing the Query String](#testing-the-query-string)
-   - 3.2. [Overriding Existing Parameters](#overriding-existing-parameters)
-   - 3.3. [Testing in REST Paths](#testing-in-rest-paths)
-   - 3.4. [Testing in Structured Data Formats](#testing-in-structured-data-formats)
-4. [Examples and Techniques](#examples-and-techniques)
-   - 4.1. [Truncating Query Strings](#truncating-query-strings)
-   - 4.2. [Injecting Invalid Parameters](#injecting-invalid-parameters)
-   - 4.3. [Injecting Valid Parameters](#injecting-valid-parameters)
-5. [Special Cases](#special-cases)
-   - 5.1. [Structured Data Formats (JSON, XML)](#structured-data-formats-json-xml)
+1. [API Types](#api-types)
+2. [API Reconnaissance](#api-reconnaissance)
+   - 2.1. [Discovering API Documentation](#discovering-api-documentation)
+   - 2.2. [Fuzzing](#fuzzing)
+   - 2.3. [Burp Scanner](#burp-scanner)
+   - 2.4. [Changing HTTP Methods](#changing-http-methods)
+3. [Mass Assignment](#mass-assignment)
+4. [Testing for Server-Side Parameter Pollution (SSPP)](#testing-for-server-side-parameter-pollution-sspp)
+   - 4.1. [Testing the Query String](#testing-the-query-string)
+   - 4.2. [Overriding Existing Parameters](#overriding-existing-parameters)
+   - 4.3. [Testing in REST Paths](#testing-in-rest-paths)
+   - 4.4. [Testing in Structured Data Formats](#testing-in-structured-data-formats)
+5. [Examples and Techniques](#examples-and-techniques)
+   - 5.1. [Truncating Query Strings](#truncating-query-strings)
+   - 5.2. [Injecting Invalid Parameters](#injecting-invalid-parameters)
+   - 5.3. [Injecting Valid Parameters](#injecting-valid-parameters)
+6. [Special Cases](#special-cases)
+   - 6.1. [Structured Data Formats (JSON, XML)](#structured-data-formats-json-xml)
 
 ---
 
 **Related Topic:** [Server-Side-Parameter-Pollution](https://github.com/tasin-zucced/Bug-Hunting-Cheatsheet/blob/main/Server%20Side%20Parameter%20Pollution.md)
+
+---
+
+# API Types
+
+## ✅ 1. **REST API**
+- **Method-based on HTTP verbs**
+
+### 🔸 Request
+```http
+GET /users/123 HTTP/1.1
+Host: api.example.com
+Authorization: Bearer <token>
+```
+
+### 🔸 Response
+```json
+{
+  "id": 123,
+  "username": "tasin",
+  "email": "tasin@example.com"
+}
+```
+
+🧠 **Data Flow**: 
+- Request hits `/users/123`
+- Server fetches data for user `123`
+- JSON sent as response
+
+---
+
+## ✅ 2. **GraphQL API**
+- **All requests go to a single endpoint (`/graphql`)**
+
+### 🔸 Request (POST)
+```http
+POST /graphql HTTP/1.1
+Content-Type: application/json
+
+{
+  "query": "{ user(id: 123) { username email } }"
+}
+```
+
+### 🔸 Response
+```json
+{
+  "data": {
+    "user": {
+      "username": "tasin",
+      "email": "tasin@example.com"
+    }
+  }
+}
+```
+
+🧠 **Data Flow**:
+- Client defines what fields they want
+- Server resolves the requested fields
+- Only requested data is returned
+
+---
+
+## ✅ 3. **gRPC API** (binary protocol over HTTP/2)
+
+### 🔸 `.proto` definition
+```proto
+service UserService {
+  rpc GetUser(UserRequest) returns (UserResponse);
+}
+
+message UserRequest {
+  int32 id = 1;
+}
+
+message UserResponse {
+  string username = 1;
+  string email = 2;
+}
+```
+
+🧠 **Data Flow**:
+- Client sends binary-encoded request
+- Server processes it using defined proto
+- Returns binary-encoded response
+
+> Use `grpcurl` to test or intercept.
+
+---
+
+## ✅ 4. **SOAP API**
+- **Uses XML + WSDL**
+
+### 🔸 Request
+```http
+POST /userService HTTP/1.1
+Content-Type: text/xml
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <getUser>
+         <id>123</id>
+      </getUser>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
+### 🔸 Response
+```xml
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <getUserResponse>
+         <username>tasin</username>
+         <email>tasin@example.com</email>
+      </getUserResponse>
+   </soap:Body>
+</soap:Envelope>
+```
+
+🧠 **Data Flow**:
+- XML request processed by the server
+- XML response returned
+
+---
+
+## ✅ 5. **WebSocket API**
+- **For real-time data flow**
+
+### 🔸 Handshake (Initial Upgrade Request)
+```http
+GET /chat HTTP/1.1
+Host: example.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==
+```
+
+✅ If accepted, connection upgrades to full-duplex
+
+### 🔸 Data Example (JSON over WebSocket)
+```json
+{ "action": "sendMessage", "to": "tasin", "msg": "Yo!" }
+```
+
+🧠 **Data Flow**:
+- Once connected, both client & server can push/pull data anytime
+
+---
+
+## ✅ 6. **JSON-RPC API**
+
+### 🔸 Request
+```http
+POST /api HTTP/1.1
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "method": "getUser",
+  "params": { "id": 123 },
+  "id": 1
+}
+```
+
+### 🔸 Response
+```json
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "username": "tasin",
+    "email": "tasin@example.com"
+  },
+  "id": 1
+}
+```
+
+🧠 **Data Flow**:
+- JSON-RPC defines a consistent message format for request/response
+- Useful for remote procedure call APIs
+
+---
+
+## ✅ 7. **SSE (Server-Sent Events)**
+
+### 🔸 Request
+```http
+GET /events HTTP/1.1
+Accept: text/event-stream
+```
+
+### 🔸 Response (streaming)
+```
+data: { "message": "Hello Tasin!" }
+```
+
+🧠 **Data Flow**:
+- Server pushes events to browser one-way
+- Great for live stock data, alerts, etc.
+
+---
+
+## ✅ 8. **OData API**
+
+### 🔸 Request
+```http
+GET /users?$filter=id eq 123 HTTP/1.1
+Host: api.example.com
+```
+
+### 🔸 Response
+```json
+{
+  "value": [
+    {
+      "id": 123,
+      "username": "tasin",
+      "email": "tasin@example.com"
+    }
+  ]
+}
+```
+
+🧠 **Data Flow**:
+- Data filtering is done by query options (`$filter`, `$select`, `$orderby`, etc.)
+
+---
+
+## ✅ 9. **AsyncAPI (event-based, e.g., MQTT, Kafka)**
+
+### 🔸 Example (MQTT publish)
+```bash
+# Publish message
+mosquitto_pub -h broker.example.com -t user/123/alert -m '{"message": "New login"}'
+```
+
+🧠 **Data Flow**:
+- Publish-subscribe model
+- Data is pushed to all subscribers of a topic
 
 ---
 
