@@ -17,4 +17,15 @@ We can use `Burp InQL` for introspection, `InQL > Provide URL of the GraphQL End
 
 ## Manuall analyzing
 
-In some cases, developers disable this Introspection feature. However we can bypass this by manually analyzing the 
+In some cases, developers disable this Introspection feature. However we can bypass this by manually analyzing the
+
+# Exploitation
+
+## Accessing private GraphQL posts
+
+Step:
+  1. Copy the url that have Graphql endpoint.
+  2. InQL >> Paste url >> Analyze
+  3. In the box below we can get the analyzed details of the Graphql api.
+  4. Send the query to the repeater and modify the details if needed. 
+  
