@@ -40,7 +40,7 @@ X-Original-URL: /admin/deleteUser
 An alternative attack relates to the HTTP method used in the request. In this situation, try to change request method and see response.
 ___
 ### Referer based access control
- Some websites impliment access controls on the Referer header submitted in the HTTP request. The Referer header can be added to requests by browsers to indicate which page initiated a request.<br>
+Some websites impliment access controls on the Referer header submitted in the HTTP request instead of user session. The Referer header can be added to requests by browsers to indicate which page initiated a request.<br>
 For example, an application robustly enforces access control over the main administrative page at ```/admin```, but for sub-pages such as ```/admin/deleteUser``` only inspects the Referer header. If the Referer header contains the main /admin URL, then the request is allowed.
 <br>
 ```txt
