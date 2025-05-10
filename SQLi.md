@@ -380,6 +380,8 @@ and 1=2 union select "1 union select 1,2,3,4-- -",2,3-- - >> Query inside query
 
 ## XML based filter bypass via XML encoding
 
+![Screenshot From 2025-05-10 18-01-10](https://github.com/user-attachments/assets/764a7870-b62b-4800-9826-8050dd3fd9b8)
+
 **Portswigger Academy Lab:** [Click](https://portswigger.net/web-security/sql-injection/lab-sql-injection-with-filter-bypass-via-xml-encoding)
 
 ## Filter Bypass Using Appending 
