@@ -32,12 +32,13 @@ This approach is insecure because a user can modify the value and access functio
 In some applications, the exploitable parameter does not have a predictable value. For example, instead of an incrementing number, an application might use globally unique identifiers (GUIDs) to identify users. This may prevent an attacker from guessing or predicting another user's identifier. However, the GUIDs belonging to other users might be disclosed (Information Discloser) elsewhere in the application where users are referenced, such as user messages or reviews.
 ___
 ### Broken access control resulting from platform misconfiguration Url and Method based
-Some applications enforce access controls at the platform layer. they do this by restricting access to specific URLs and HTTP methods based on the user's role. Some application frameworks support various non-standard HTTP headers that can be used to override the URL in the original request, such as X-Original-URL and X-Rewrite-URL.
+Some applications enforce access controls at the platform layer by restricting access to specific URLs and HTTP methods based on the user's role. In such cases, it may be possible to access certain endpoints by changing the request method from `POST to GET` or vice versa.<br>
+<br>
+Also some application frameworks support various non-standard HTTP headers that can be used to override the URL in the original request, such as X-Original-URL and X-Rewrite-URL.
 ```txt
 POST / HTTP/1.1
 X-Original-URL: /admin/deleteUser
 ```
-An alternative attack relates to the HTTP method used in the request. In this situation, try to change request method and see response.
 ___
 ### Referer based access control
 Some websites impliment access controls on the Referer header submitted in the HTTP request instead of user session. The Referer header can be added to requests by browsers to indicate which page initiated a request.<br>
