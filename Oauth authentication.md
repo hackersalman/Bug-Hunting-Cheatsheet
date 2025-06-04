@@ -21,14 +21,21 @@
 ---
 
 ### Improper implementation of the implicit grant type
-In the implicit flow, this POST request is exposed to attackers via their browser. As a result, this behavior can lead to a serious vulnerability if the client application doesn't properly check that the access token matches the other data in the request. In this case, an attacker can simply `change the parameters` sent to the server to impersonate any user. **For example:** When a token is sent to attacker browser, an attacker might change the `username`,`email` or other details targeting another user.
+In the implicit flow, this POST request is exposed to attackers via their browser. As a result, this behavior can lead to a serious vulnerability if the client application doesn't properly check that the access token matches the other data in the request. In this case, an attacker can simply `change the parameters` sent to the server to impersonate any user. **For example:** When a token is sent to attacker browser, an attacker might change the `username`,`email` or other details targeting another user.<br>
 
+**Initial Request:**
+```http
+{"email":"victim@victim.com","username":"victim","token":"z7O3nwAGgRrarVPHp3vULtgTqPkP0jlZPTtNRZ9T-Ho"}
+```
+**Tempered Request:**
+```http
+{"email":"attacker@attacker.com","username":"attacker","token":"z7O3nwAGgRrarVPHp3vULtgTqPkP0jlZPTtNRZ9T-Ho"}
+```
 ---
 
 ### Exploiting Absense of State Parameter
 
-In Oauth mechanism, `state` parameter in authorization request work as a CSRF token. Absense of this parameter can be exploitable to CSRF attack.<br>
-<br>
+In Oauth mechanism, `state` parameter in authorization request work as a CSRF token. Absense of this parameter can be exploitable to CSRF attack. Applications use oauth mechanism for connecting other applications `(gmail, facebook, applie id)` to the client account. In this case, we can use this flaw to connect our own application `(gmail, facebook, applie id)` to the victim account by crafting an url. <br>
 
 **Here is an example of authorization request without `state` parameter**
 <br>
