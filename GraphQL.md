@@ -105,6 +105,10 @@ In some cases, developers disable this Introspection feature. However we can byp
    ```
 For more: [Portswigger](https://portswigger.net/web-security/graphql#bypassing-graphql-introspection-defenses)
 
+Portswigger Lab: [Finding a hidden GraphQL endpoint](https://portswigger.net/web-security/graphql/lab-graphql-find-the-endpoint)
+
+PoC: [YouTube](https://youtu.be/RBKU4s0-Gd0?si=a92s8NIBi2z0DmUj)
+
 ## Accessing private GraphQL posts
 
 Step:
@@ -113,3 +117,18 @@ Step:
   3. In the box below we can get the analyzed details of the Graphql api.
   4. Send the query to the repeater and modify the details if needed. 
   
+## Bypassing rate limiting using aliases
+
+Details: [Portswigger](https://portswigger.net/web-security/graphql#bypassing-rate-limiting-using-aliases)
+
+Portswigger Lab: [Bypassing GraphQL brute force protections](https://portswigger.net/web-security/graphql/lab-graphql-brute-force-protection-bypass)
+
+PoC: [YouTube](https://www.youtube.com/watch?v=sKWah9eqWR4)
+
+## GraphQL CSRF
+
+Details: [Portswigger](https://portswigger.net/web-security/graphql#bypassing-rate-limiting-using-aliases)
+
+Portswigger Lab: [Performing CSRF exploits over GraphQL](https://portswigger.net/web-security/graphql/lab-graphql-csrf-via-graphql-api)
+
+PoC: [YouTube](https://www.youtube.com/watch?v=FVW2ZRNAyw8)
