@@ -1,3 +1,21 @@
+## Index
+
+1. [Common GraphQL Endpoints](#common-end-point-of-graphql-api)
+2. [Analyzing GraphQL API with Burp](#analyzing-graphql-api-with-burp)
+
+   * Introspection
+   * InQL Plugin
+3. [Bypassing GraphQL Introspection Defenses](#bypassing-graphql-introspection-defenses)
+
+   * Special Characters Trick
+   * Changing HTTP Method or Content-Type
+   * Sample Encoded GET Requests
+4. [Accessing Private GraphQL Posts](#accessing-private-graphql-posts)
+5. [Bypassing Rate Limiting Using Aliases](#bypassing-rate-limiting-using-aliases)
+6. [GraphQL CSRF Exploitation](#graphql-csrf)
+
+---
+
 ## Common end-point of GraphQL Api
 
 In some cases GraphQL endpoint is not visible, so we can try to bruteforce the endpoint.
