@@ -4,6 +4,7 @@
 2. [Parameter-Based Access Control](#Parameter-based-access-control)
 3. [Broken Access Control Resulting from Platform Misconfiguration (URL and Method-Based)](#Broken-access-control-resulting-from-platform-misconfiguration-Url-and-Method-based)
 4. [Referer-Based Access Control](#Referer-based-access-control)
+5. [Using Shodan](#Using-Shodan)
 
 ---
 
@@ -27,9 +28,8 @@ https://insecure-website.com/login/home.jsp?admin=true
 https://insecure-website.com/login/home.jsp?role=1
 https://insecure-website.com/myaccount?id=123
 ```
-This approach is insecure because a user can modify the value and access functionality they're not authorized to, such as administrative functions.
-
-In some applications, the exploitable parameter does not have a predictable value. For example, instead of an incrementing number, an application might use globally unique identifiers (GUIDs) to identify users. This may prevent an attacker from guessing or predicting another user's identifier. However, the GUIDs belonging to other users might be disclosed (Information Discloser) elsewhere in the application where users are referenced, such as user messages or reviews.
+In some applications, instead of an incrementing number, an application might use globally unique identifiers (GUIDs) to identify users. This may prevent an attacker from guessing or predicting another user's identifier.
+However, the GUIDs belonging to other users might be disclosed elsewhere in the application.
 ___
 ### Broken access control resulting from platform misconfiguration Url and Method based
 Some applications enforce access controls at the platform layer by restricting access to specific URLs and HTTP methods based on the user's role. In such cases, it may be possible to access certain endpoints by changing the request method from `POST to GET` or vice versa.<br>
@@ -41,11 +41,14 @@ X-Original-URL: /admin/deleteUser
 ```
 ___
 ### Referer based access control
-Some websites impliment access controls on the Referer header submitted in the HTTP request instead of user session. The Referer header can be added to requests by browsers to indicate which page initiated a request.<br>
-For example, an application robustly enforces access control over the main administrative page at ```/admin```, but for sub-pages such as ```/admin/deleteUser``` only inspects the Referer header. If the Referer header contains the main /admin URL, then the request is allowed.
+Some websites impliment access controls on the Referer header submitted in the HTTP request. For example, an application robustly enforces access control over the main administrative page at `/admin`, but for sub-pages such as `/admin/deleteUser` only inspects the Referer header. If the Referer header contains the main /admin URL, then the request is allowed.
 <br>
 ```txt
 Referrer: https://example.com/admin/
 ```
-In this case, the Referer header can be fully controlled by an attacker. This means that they can forge direct requests to sensitive sub-pages like ```https://example.com/admin/deleteUser``` by supplying the required Referer header, and gain unauthorized access.
+In this case, the Referer header can be fully controlled by an attacker. This means that they can forge direct requests to sensitive sub-pages like `https://example.com/admin/deleteUser` by supplying the required Referer header, and gain unauthorized access.
 ___
+### Using Shodan
+```txt
+ssl:redacted.com http.html:admin
+```
