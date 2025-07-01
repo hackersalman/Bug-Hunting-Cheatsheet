@@ -1,6 +1,7 @@
 ## DNS Testing
 
-1. [Testing Zone Transfer Vulnerability](#Testing-Zone-Transfer-Vulnerability)
+1. [Zone Transfer](#Testing-Zone-Transfer-Vulnerability)
+2. [Subdomain Takeover](#Testing-Subdomain-Takeover)
 
 ## 1. Testing Zone Transfer Vulnerability
 
@@ -9,6 +10,7 @@
 ```bash
 dig ns example.com
 ```
+
 This will list the nameservers (e.g., `ns1.example.com`, `ns2.example.com`).
 
 **Try zone transfer with each nameserver**
@@ -16,6 +18,7 @@ This will list the nameservers (e.g., `ns1.example.com`, `ns2.example.com`).
 ```bash
 dig AXFR example.com @ns1.example.com
 ```
+
 If not vulnerable, you'll see something like:
 
 ```
@@ -25,15 +28,25 @@ If not vulnerable, you'll see something like:
 **Tools for Automated Testing** (Recommended)
 
 * **dnsenum**
+
   ```bash
   dnsenum example.com
   ```
 
 ## 2. Testing Subdomain Takeover
 
-**Check CNAME of every 404 domains of target**
+**Check the CNAME of every 404 subdomain of the target**
 
 ```bash
 dig CNAME sub.example.com
 ```
-If the 404 domains pointing to a third-party service, but there is no services running on that site, that means the domain is vulnerable to subdomain takeover.
+
+If the 404 subdomain points to a third-party service, but there is no service running on that site, it means the domain is vulnerable to subdomain takeover.
+
+**Tools for Automated Testing** (Recommended)
+
+* **subjack**
+
+  ```bash
+  subjack -w all.txt -t 50 -timeout 30 -ssl -v -c /usr/share/wordlists/fingerprints.json -o subjack.txt
+  ```
