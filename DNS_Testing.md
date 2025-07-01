@@ -5,7 +5,7 @@
 
 ---
 
-## 1. Zone Transfer
+## Zone Transfer
 
 **Find the domain's nameservers (NS records):**
 
@@ -37,7 +37,7 @@ If not vulnerable, you'll see something like:
 
 ---
 
-## 2. Subdomain Takeover
+## Subdomain Takeover
 
 **Check the CNAME of every 404 subdomain on the target:**
 
