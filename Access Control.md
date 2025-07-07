@@ -5,6 +5,7 @@
 3. [Broken Access Control Resulting from Platform Misconfiguration (URL and Method-Based)](#Broken-access-control-resulting-from-platform-misconfiguration-Url-and-Method-based)
 4. [Referer-Based Access Control](#Referer-based-access-control)
 5. [Using Shodan](#Using-Shodan)
+6. [Using Burp Intruder](#Using-Burp-Intruder)
 
 ---
 
@@ -51,4 +52,8 @@ ___
 ### Using Shodan
 ```txt
 ssl:redacted.com http.html:admin
+```
+### Using Burp Intruder
+```txt
+https://web.archive.org/web/20230204201819/https://amineaboud.medium.com/story-of-a-weird-vulnerability-i-found-on-facebook-fc0875eb5125
 ```
