@@ -50,6 +50,10 @@ If it not works, try double encoding.
 /admiN >> 200 OK
 ```
 
+### Exploiting Via Race Condition
+
+[More Info](https://web.archive.org/web/20230204201819/https://amineaboud.medium.com/story-of-a-weird-vulnerability-i-found-on-facebook-fc0875eb5125)
+
 ## More Info
 
 [Hacktricks](https://book.hacktricks.wiki/en/network-services-pentesting/pentesting-web/403-and-401-bypasses.html)
