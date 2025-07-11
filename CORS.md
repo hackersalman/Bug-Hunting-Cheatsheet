@@ -1,9 +1,10 @@
-**CORS Scenario**
+## **CORS Scenario**
 
-![Screenshot From 2025-03-17 23-57-08](https://github.com/user-attachments/assets/96c5cf0f-9fc0-45a8-b364-776097cceb5c)
+<img width="790" height="638" alt="Screenshot From 2025-07-11 02-53-13" src="https://github.com/user-attachments/assets/20500a8a-3bf1-4a28-a68c-52e8eb761137" />
 
-These headers state that access is allowed from the requesting domain `(malicious-website.com)` and that the cross-origin requests can include cookies `(Access-Control-Allow-Credentials: true)` and so will be processed in-session.
 
+In this scenario, the attacker tricks users into visiting a malicious site `(evil.com)`. The site then attempts to retrieve sensitive information from the users’ bank accounts `(e.g., from the /account-info endpoint)` by exploiting improperly configured CORS policies.
+ 
 ### Testing for CORS vulnerability
 1. Change Origin Header to arbitrary domain.
 ```
@@ -81,3 +82,16 @@ Origin: https://malicious.vulnerable-website.com
 Note: If a website trusts an origin that is vulnerable to cross-site scripting (XSS), then an attacker could exploit the XSS to inject some JavaScript that uses CORS to retrieve sensitive information from the site that trusts the vulnerable application. So, if you find a CORS vulnerability, try to bind it with XSS attack.
 
 ---
+
+### Notes
+
+**Cookie Issue**
+
+```http
+Set-Cookie: sessionid=abc123; HttpOnly; Secure; Path=/
+```
+
+* `HttpOnly` prevents JavaScript access to cookies.
+* `Secure` ensures cookies are sent only over HTTPS.
+
+In this case, we can't fetch the user's session cookie.
