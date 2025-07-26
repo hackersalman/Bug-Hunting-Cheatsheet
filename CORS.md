@@ -95,3 +95,5 @@ Set-Cookie: sessionid=abc123; HttpOnly; Secure; Path=/
 * `Secure` ensures cookies are sent only over HTTPS.
 
 In this case, we can't fetch the user's session cookie.
+
+<img width="1116" height="348" alt="Screenshot From 2025-07-26 22-36-29" src="https://github.com/user-attachments/assets/39b890d4-b65a-47f4-8a0b-14208a1b5342" />
