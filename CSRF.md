@@ -6,7 +6,8 @@
 
 1. [Testing CSRF Token](#testing-csrf-token)
 2. [Testing CSRF Token and CSRF Key Cookies](#testing-csrf-token-and-csrf-key-cookies)
-3. [Exploitation Techniques](#exploitation-techniques)
+   - [CSRF Exploit With CRLF Injection](#CSRF-Exploit-With-CRLF-Injection)
+4. [Exploitation Techniques](#exploitation-techniques)
    - [HTML Exploit Example](#html-exploit-example)
    - [Image-based CSRF Cookie Injection](#image-based-csrf-cookie-injection)
    - [XSS Based CSRF Attack](#XSS-Based-CSRF-Attack)
@@ -42,9 +43,9 @@ When testing a CSRF token, follow these steps:
 
 **Summary :** Suppose there is a web application where the CSRF token or CSRF token + CSRF key is tied to the user's session cookie. If we replace the CSRF token or CSRF token + CSRF key with that of another user and the request still returns a `200 OK` response, it indicates that the application is vulnerable to a CSRF attack. A potential exploitation method is explained in the following [Portswigger Lab](https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-tied-to-non-session-cookie).
 
-<br>
+### CSRF Exploit With CRLF Injection
 
-**Note:** You can collect csrf token by inspect element.
+[Portswigger Lab](https://portswigger.net/web-security/csrf/bypassing-token-validation/lab-token-duplicated-in-cookie)
 
 ---
 
