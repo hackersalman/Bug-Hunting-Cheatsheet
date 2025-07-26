@@ -236,4 +236,8 @@ console.log(document.cookie);
 ```
 - Without `HttpOnly`: The attacker can steal the `session` cookie.
 - With `HttpOnly`: JavaScript **cannot** access the cookie, protecting user sessions.
+  
+
+<img width="1116" height="348" alt="Screenshot From 2025-07-26 22-36-29" src="https://github.com/user-attachments/assets/39b890d4-b65a-47f4-8a0b-14208a1b5342" />
+
 ---
