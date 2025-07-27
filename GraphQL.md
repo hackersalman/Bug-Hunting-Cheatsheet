@@ -145,6 +145,11 @@ PoC: [YouTube](https://www.youtube.com/watch?v=sKWah9eqWR4)
 
 ## GraphQL CSRF
 
+Step:
+  1. Change `Content-Type: application/json` to `Content-Type: application/x-www-form-urlencoded`
+  2. Change request body from json to parameter based body.
+  3. Generate CSRF PoC and test request in browser.
+
 Details: [Portswigger](https://portswigger.net/web-security/graphql#bypassing-rate-limiting-using-aliases)
 
 Portswigger Lab: [Performing CSRF exploits over GraphQL](https://portswigger.net/web-security/graphql/lab-graphql-csrf-via-graphql-api)
